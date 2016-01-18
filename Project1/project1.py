@@ -5,17 +5,31 @@ Group 11 - Karen Thrasher, William George, Kyle Livermore
 '''
 
 import timeit #Include for timing code
+import ast
 
 #File input
-def fileInput():
-	print "File Input"
+def fileInput(fileName):
+	f = open(fileName, "r")
+	i = 0
+	array = []
+	for line in f:
+		array.append( ast.literal_eval(line))
+	f.close()
+	return array
 
 
-#File output
-def fileOutput():
-	print "File Output"
+#File output for grading
+def fileOutput(fileName, startingArrays, MaxArrays):
+	f = open(fileName, "w")
+	for i in range(len(startingArrays)):
+		f.write(str(startingArrays[i]) + "\n")
+		f.write(str(MaxArrays[i]) + "\n")
+		f.write(str(sum(MaxArrays[i])) + "\n\n")
+	f.close()
 
-
+#File output of data for analysis
+def fileOutputCSV():
+	print "File Output CSV"
 #Creates array of random numbers
 def randomArray():
 	print "Random array"
