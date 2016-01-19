@@ -31,11 +31,14 @@ def fileOutput(fileName, startingArrays, MaxArrays):
 
 
 #File output of data for analysis
-def fileOutputCSV(startingArrays, MaxArrays):
+def fileOutputCSV(startingArrays, maxArrays):
+	# set output file as write file
 	of = open('output.csv', 'wb') 
-	write = csv.writer(of, delimiter=";")
-	rows = zip(startingArrays, maxArrays, sum(maxArray))
-	writer.write(rows)
+	# set delimiter as Excel delimiter
+	writer = csv.writer(of)
+	# place arrays in CSV file
+	writer.writerows(startingArrays)
+	writer.writerows(maxArrays)
 	of.close
 	print "File Output CSV"
 
