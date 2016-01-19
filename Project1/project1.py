@@ -45,9 +45,11 @@ def fileOutputCSV(startingArrays, maxArrays):
 
 #Creates array of random numbers
 def randomArray(n, seed = 0):
+	# set seed
 	if seed != 0:
 		random.seed(seed)
 	randArray = []
+	# build random array
 	for i in range(n):
 		randArray.append(random.randrange(-100,100))
 	return randArray
@@ -59,14 +61,20 @@ def a1(array):
 	maxSum = float("-inf")
 	maxSumStart = 0
 	maxSumFinish = 0
+	#outer loop advance i
 	for i in range(len(array)):
 		currentSumStart = i
 		if currentSum > maxSum:
 			maxSum = currentSum
 			maxSumStart = i
 			maxSumFinish = i
+		# set range to array length - i - 1
+		# inner loop advance j
 		for j in range(len(array) - i - 1):
+			#set current sum to sum of elements from i to j
 			currentSum = sum(array[i:j+i+2])
+			# check if > max sum and reset max sum to current sum
+			# set max sub-array start and finish
 			if currentSum > maxSum:
 				maxSum = currentSum
 				maxSumStart = currentSumStart
@@ -82,6 +90,7 @@ def a2(array):
 	maxSum = float("-inf")
 	maxSumStart = 0
 	maxSumFinish = 0
+	# outer loop advance i
 	for i in range(len(array)):
 		currentSum = array[i]
 		currentSumStart = i
@@ -89,8 +98,12 @@ def a2(array):
 			maxSum = currentSum
 			maxSumStart = i
 			maxSumFinish = i
+		# inner loop advance j
 		for j in range(len(array) - i - 1):
+			# add j+1 to current sum
 			currentSum += array[j+i+1]
+			# check if current sum is greater than maxSum
+			# Set start and finish if new max sub-array
 			if currentSum > maxSum:
 				maxSum = currentSum
 				maxSumStart = currentSumStart
