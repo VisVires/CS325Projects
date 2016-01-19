@@ -6,6 +6,7 @@ Group 11 - Karen Thrasher, William George, Kyle Livermore
 
 import timeit #Include for timing code
 import ast
+import random
 
 #File input
 def fileInput(fileName):
@@ -27,17 +28,43 @@ def fileOutput(fileName, startingArrays, MaxArrays):
 		f.write(str(sum(MaxArrays[i])) + "\n\n")
 	f.close()
 
+
 #File output of data for analysis
 def fileOutputCSV():
 	print "File Output CSV"
-#Creates array of random numbers
-def randomArray():
-	print "Random array"
 
+
+#Creates array of random numbers
+def randomArray(n, seed = 0):
+	if seed != 0:
+		random.seed(seed)
+	randArray = []
+	for i in range(n):
+		randArray.append(random.randrange(-100,100))
+	return randArray
 
 #Algorithm 1 - Enumeration
-def a1():
-	print "Algorithm 1 - Enumeration"
+def a1(array):
+	currentSum = 0
+	currentSumStart= 0
+	maxSum = float("-inf")
+	maxSumStart = 0
+	maxSumFinish = 0
+	for i in range(len(array)):
+		currentSum = array[i]
+		currentSumStart = i
+		if currentSum > maxSum:
+			maxSum = currentSum
+			maxSumStart = i
+			maxSumFinish = i
+		for j in range(len(array) - i - 1):
+			currentSum += array[j+i+1]
+			if currentSum > maxSum:
+				maxSum = currentSum
+				maxSumStart = currentSumStart
+				maxSumFinish = j+i+1
+	maxArray = array[maxSumStart : maxSumFinish + 1]
+	return maxArray
 
 
 #Algorithm 2 - Better Enumeration
