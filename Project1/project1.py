@@ -7,6 +7,7 @@ Group 11 - Karen Thrasher, William George, Kyle Livermore
 import timeit #Include for timing code
 import ast
 import random
+import csv #Import CSV module
 
 #File input
 def fileInput(fileName):
@@ -30,7 +31,12 @@ def fileOutput(fileName, startingArrays, MaxArrays):
 
 
 #File output of data for analysis
-def fileOutputCSV():
+def fileOutputCSV(startingArrays, MaxArrays):
+	of = open('output.csv', 'wb') 
+	write = csv.writer(of, delimiter=";")
+	rows = zip(startingArrays, maxArrays, sum(maxArray))
+	writer.write(rows)
+	of.close
 	print "File Output CSV"
 
 
