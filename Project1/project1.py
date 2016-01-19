@@ -51,6 +51,29 @@ def a1(array):
 	maxSumStart = 0
 	maxSumFinish = 0
 	for i in range(len(array)):
+		currentSumStart = i
+		if currentSum > maxSum:
+			maxSum = currentSum
+			maxSumStart = i
+			maxSumFinish = i
+		for j in range(len(array) - i - 1):
+			currentSum = sum(array[i:j+i+2])
+			if currentSum > maxSum:
+				maxSum = currentSum
+				maxSumStart = currentSumStart
+				maxSumFinish = j+i+1
+	maxArray = array[maxSumStart : maxSumFinish + 1]
+	return maxArray
+
+
+#Algorithm 2 - Better Enumeration
+def a2(array):
+	currentSum = 0
+	currentSumStart= 0
+	maxSum = float("-inf")
+	maxSumStart = 0
+	maxSumFinish = 0
+	for i in range(len(array)):
 		currentSum = array[i]
 		currentSumStart = i
 		if currentSum > maxSum:
@@ -65,11 +88,6 @@ def a1(array):
 				maxSumFinish = j+i+1
 	maxArray = array[maxSumStart : maxSumFinish + 1]
 	return maxArray
-
-
-#Algorithm 2 - Better Enumeration
-def a2():
-	print "Algorithm 2 - Better Enumeration"
 
 
 #Algorithm 3 - Divide and Conquer
