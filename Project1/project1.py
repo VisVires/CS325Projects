@@ -121,6 +121,7 @@ def a3(array):
 	print "Algorithm 3 - Divide and Conquer"
 
 #helper fxn
+# returns suffix and prefix but not left or right subarray
 def maxDivAndConq(array, left, right):
 	# base case
 	if (left == right):
@@ -133,19 +134,24 @@ def maxDivAndConq(array, left, right):
 	# set first prefix and suffix elements
 	leftMax = array[mid]
 	rightMax = array[mid + 1]
+	lBound = left
+	rBound = right
 	# find max from middle to beginning
 	temp = 0
 	for i in range(mid, left, -1):
 		temp += array[i]
 		if(temp > leftMax): 
 			leftMax = temp
+			lBound = i
 	# find max from mid to end
 	temp = 0
 	for i in range(mid+1, right, 1):
 		temp += array[i]
 		if (temp > rightMax):
 			rightMax = temp
-	return max(max(leftSub, rightSub), leftMax + rightMax)
+			rBound = i
+	return array[lBound:rBound+1]
+	# return max(max(leftSub, rightSub), leftMax + rightMax)
 
 
 #Algorithm 4 - Linear-time
