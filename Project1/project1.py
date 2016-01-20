@@ -118,8 +118,27 @@ def a3():
 
 
 #Algorithm 4 - Linear-time
-def a4():
-	print "Algorithm 3 - Divide and Conquer"
+def a4(array):
+	maxSum = 0
+	maxStartIndex = 0
+	maxEndIndex = 0
+	maxCurrent = 0
+	startIndex = 0
+	endIndex = 0
+	for i in range(len(array)):
+		maxCurrent = maxCurrent + array[i]
+		if maxCurrent < 0:
+			maxCurrent = 0
+			startIndex = i+1
+			endIndex = i+1
+		else:
+			endIndex = i
+			if maxCurrent > maxSum:
+				maxSum = maxCurrent
+				maxStartIndex = startIndex
+				maxEndIndex = endIndex
+	maxArray = array[maxStartIndex : maxEndIndex + 1]
+	return maxArray
 
 
 def main():
