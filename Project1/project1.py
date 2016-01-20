@@ -112,9 +112,40 @@ def a2(array):
 	return maxArray
 
 
+
 #Algorithm 3 - Divide and Conquer
-def a3():
+def a3(array):
+	if (len(array) == 0):
+		return 0
+	return maxDivAndConq(array,0, len(array)-1)
 	print "Algorithm 3 - Divide and Conquer"
+
+#helper fxn
+def maxDivAndConq(array, left, right):
+	# base case
+	if (left == right):
+		return array[left]
+	# set middle element
+	mid = (left+right)/2
+	# recursive steps
+	leftSub = maxDivAndConq(array, left, mid)
+	rightSub = maxDivAndConq(array, mid + 1, right)
+	# set first prefix and suffix elements
+	leftMax = array[mid]
+	rightMax = array[mid + 1]
+	# find max from middle to beginning
+	temp = 0
+	for i in range(mid, left, -1):
+		temp += array[i]
+		if(temp > leftMax): 
+			leftMax = temp
+	# find max from mid to end
+	temp = 0
+	for i in range(mid+1, right, 1):
+		temp += array[i]
+		if (temp > rightMax):
+			rightMax = temp
+	return max(max(leftSub, rightSub), leftMax + rightMax)
 
 
 #Algorithm 4 - Linear-time
