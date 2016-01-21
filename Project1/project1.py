@@ -117,41 +117,50 @@ def a2(array):
 def a3(array):
 	if (len(array) == 0):
 		return 0
-	return maxDivAndConq(array,0, len(array)-1)
-	print "Algorithm 3 - Divide and Conquer"
+	start = 0
+	end = len(array)-1
+	left, right, maxSum = maxDivAndConq(array, start, end)
+	return array[left:right+1] , maxSum
 
-#helper fxn
-# returns suffix and prefix but not left or right subarray
-def maxDivAndConq(array, left, right):
-	# base case
-	if (left == right):
-		return array[left]
-	# set middle element
-	mid = (left+right)/2
-	# recursive steps
-	leftSub = maxDivAndConq(array, left, mid)
-	rightSub = maxDivAndConq(array, mid + 1, right)
-	# set first prefix and suffix elements
-	leftMax = array[mid]
-	rightMax = array[mid + 1]
-	lBound = left
-	rBound = right
-	# find max from middle to beginning
-	temp = 0
+def findMaxArr(A, left, mid, right):
+	# Find Left Max
+	leftSum = float('-inf')
+	currSum = 0
+	maxLeft = maxRight = 0
 	for i in range(mid, left, -1):
-		temp += array[i]
-		if(temp > leftMax): 
-			leftMax = temp
-			lBound = i
-	# find max from mid to end
-	temp = 0
-	for i in range(mid+1, right, 1):
-		temp += array[i]
-		if (temp > rightMax):
-			rightMax = temp
-			rBound = i
-	return array[lBound:rBound+1]
-	# return max(max(leftSub, rightSub), leftMax + rightMax)
+		currSum = currSum + A[i]
+		if currSum > leftSum:
+			leftSum = currSum
+			maxLeft = i
+	# Find Right Max
+	rightSum = float('-inf')
+	currSum = 0
+	for j in range(mid + 1, right):
+		currSum = currSum + A[j]
+		if currSum > rightSum:
+			rightSum = currSum
+			maxRight = j
+	return (maxLeft, maxRight, leftSum + rightSum)
+
+def maxDivAndConq(A, left, right):
+	# base case
+	if (right == left):
+		return (left, right, A[left])
+	else:
+		mid = (left + right) / 2
+
+		leftLeft, leftRight, leftSum = maxDivAndConq(A, left, mid)
+		
+		rightLeft, rightRight, rightSum = maxDivAndConq(A, mid + 1, right)
+		
+		midLeft, midRight, midSum = findMaxArr(A, left, mid, right)
+		
+		if (leftSum >= rightSum & leftSum >= midSum):
+			return  leftLeft, leftRight, leftSum
+		elif (rightSum >= leftSum & rightSum >= midSum):
+			return rightLeft, rightLeft, rightSum
+		else:
+			return midLeft, midRight, midSum
 
 
 #Algorithm 4 - Linear-time
