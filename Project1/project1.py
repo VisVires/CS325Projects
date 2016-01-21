@@ -119,8 +119,8 @@ def a3(array):
 		return 0
 	start = 0
 	end = len(array)-1
-	left, right, maxSum = maxDivAndConq(array, start, end)
-	return array[left:right+1] , maxSum
+	low, high, maxSum = maxDivAndConq(array, start, end)
+	return array[low:high+1] , maxSum
 
 def findMaxArr(A, left, mid, right):
 	# Find Left Max
@@ -142,26 +142,30 @@ def findMaxArr(A, left, mid, right):
 			maxRight = j
 	return (maxLeft, maxRight, leftSum + rightSum)
 
-def maxDivAndConq(A, left, right):
+def maxDivAndConq(A, low, high):
 	# base case
-	if (right == left):
-		return (left, right, A[left])
+	if (high == low):
+		return (low, high, A[low])
 	else:
-		mid = (left + right) / 2
-
-		leftLeft, leftRight, leftSum = maxDivAndConq(A, left, mid)
-		
-		rightLeft, rightRight, rightSum = maxDivAndConq(A, mid + 1, right)
-		
-		midLeft, midRight, midSum = findMaxArr(A, left, mid, right)
-		
+		# find mid element
+		mid = (low + high) / 2
+		# get left right and prefix+suffix subarrays
+		leftLow, leftHigh, leftSum = maxDivAndConq(A, low, mid)
+		rightLow, rightHigh, rightSum = maxDivAndConq(A, mid + 1, high)
+		midLow, midHigh, midSum = findMaxArr(A, low, mid, high)
+		# find greatest subarray
 		if (leftSum >= rightSum & leftSum >= midSum):
-			return  leftLeft, leftRight, leftSum
+			# print "left" 
+			# print leftLow, leftHigh, leftSum
+			return  leftLow, leftHigh, leftSum
 		elif (rightSum >= leftSum & rightSum >= midSum):
-			return rightLeft, rightLeft, rightSum
+			# print "right" 
+			# print rightLow, rightHigh, rightSum
+			return rightLow, rightHigh, rightSum
 		else:
-			return midLeft, midRight, midSum
-
+			# print "middle" 
+			# print midLow, midHigh, midSum
+			return midLow, midHigh, midSum
 
 #Algorithm 4 - Linear-time
 def a4(array):
