@@ -127,7 +127,7 @@ def findMaxArr(A, left, mid, right):
 	leftSum = float('-inf')
 	currSum = 0
 	maxLeft = maxRight = 0
-	for i in range(mid, left, -1):
+	for i in range(mid, left -1, -1):
 		currSum = currSum + A[i]
 		if currSum > leftSum:
 			leftSum = currSum
@@ -135,7 +135,7 @@ def findMaxArr(A, left, mid, right):
 	# Find Right Max
 	rightSum = float('-inf')
 	currSum = 0
-	for j in range(mid + 1, right):
+	for j in range(mid + 1, right + 1, 1):
 		currSum = currSum + A[j]
 		if currSum > rightSum:
 			rightSum = currSum
