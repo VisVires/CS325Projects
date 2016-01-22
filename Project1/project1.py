@@ -11,6 +11,7 @@ import sys
 import getopt
 import csv #Import CSV module
 from time import clock
+import itertools
 
 #File input
 def fileInput(fileName):
@@ -38,14 +39,16 @@ def fileOutput(fileName, startingArrays, MaxArrays):
 
 
 #File output of data for analysis
-def fileOutputCSV(startingArrays, maxArrays):
+def fileOutputCSV(n, timeData, mode, Alg):
 	# set output file as write file
-	of = open('output.csv', 'wb') 
+	of = open('output.csv', mode)
 	# set delimiter as Excel delimiter
 	writer = csv.writer(of)
 	# place arrays in CSV file
-	writer.writerows(startingArrays)
-	writer.writerows(maxArrays)
+	writer.writerow([Alg])
+	writer.writerow(n)
+	writer.writerow(timeData)
+
 	of.close
 	print ("File Output CSV")
 
@@ -201,6 +204,7 @@ def a4(array):
 def main(argv):
 	inputFile = ""
 	outputFile = ""
+	notRunTimeRun = True
 	try:
 		opts, args = getopt.getopt(argv, "i:o:", ["ifile=", "ofile=", "runTimeData"] )
 	except getopt.GetoptError:
@@ -219,56 +223,66 @@ def main(argv):
 		elif opt in ("-o", "--ofile"):
 			outputFile = arg
 		elif opt in ("--runTimeData"):
+			notRunTimeRun = False
 			#Run each algorithm on the counterpart list of n 10x collecting time data and output time data to a .csv
+			repeatMeasurements = 10
 			nForA1 = [20, 40, 80, 160, 200, 350, 500, 650, 800, 1000]
+			nForA1 = list(itertools.chain.from_iterable(itertools.repeat(x,10) for x in nForA1))
 			nForA2 = [20, 40, 80, 160, 200, 350, 500, 650, 800, 1000]
-			nForA3 = [20, 40, 80, 160, 200, 350, 500, 650, 800, 1000]
-			nForA4 = [20, 40, 80, 160, 200, 350, 500, 650, 800, 1000]
+			nForA2 = list(itertools.chain.from_iterable(itertools.repeat(x,10) for x in nForA2))
+			nForA3 = [20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240]
+			nForA3 = list(itertools.chain.from_iterable(itertools.repeat(x,10) for x in nForA3))
+			nForA4 = [20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240]
+			nForA4 = list(itertools.chain.from_iterable(itertools.repeat(x,10) for x in nForA4))
+			print(nForA1)
 			timeForA1 = []
 			timeForA2 = []
 			timeForA3 = []
 			timeForA4 = []
-
+			print("Algorithm 1")
 			for i in range(len(nForA1)):
 				print(i)
-				timeForA1.append([])
-				for j in range(10):
-					start = clock()
-					a1(randomArray(nForA1[i]))
-					timeForA1[i].append(clock() - start)
+				arr = randomArray(nForA1[i])
+				start = clock()
+				a1(arr)
+				timeForA1.append(clock() - start)
 			print(timeForA1)
+			fileOutputCSV(nForA1, timeForA1, "w", "Algorithm1")
 
+			print("Algorithm 2")
 			for i in range(len(nForA2)):
 				print(i)
-				timeForA2.append([])
-				for j in range(10):
-					start = clock()
-					a2(randomArray(nForA2[i]))
-					timeForA2[i].append(clock() - start)
+				arr = randomArray(nForA2[i])
+				start = clock()
+				a2(arr)
+				timeForA2.append(clock() - start)
 			print(timeForA2)
+			fileOutputCSV(nForA2, timeForA2, "a", "Algorithm2")
 
+			print("Algorithm 3")
 			for i in range(len(nForA3)):
 				print(i)
-				timeForA3.append([])
-				for j in range(10):
-					start = clock()
-					a3(randomArray(nForA3[i]))
-					timeForA3[i].append(clock() - start)
+				arr = randomArray(nForA3[i])
+				start = clock()
+				a3(arr)
+				timeForA3.append(clock() - start)
 			print(timeForA3)
+			fileOutputCSV(nForA3, timeForA3, "a", "Algorithm3")
 
+			print("Algorithm 4")
 			for i in range(len(nForA4)):
 				print(i)
-				timeForA4.append([])
-				for j in range(10):
-					start = clock()
-					a4(randomArray(nForA4[i]))
-					timeForA4[i].append(clock() - start)
+				arr = randomArray(nForA4[i])
+				start = clock()
+				a4(arr)
+				timeForA4.append(clock() - start)
 			print(timeForA4)
+			fileOutputCSV(nForA4, timeForA4, "a", "Algorithm4")
 
 
 	if inputFile == "" or outputFile == "":
-		print(inputFile + ", " + outputFile)
-		print("project1.py -i <inputFile> -o <outputFile> --runTimeData\n"
+		if notRunTimeRun:
+			print("project1.py -i <inputFile> -o <outputFile> --runTimeData\n"
               "program must be run with either input and output files or the option --runTimeData, runtime data an\n"
                   "optional parameter that outputs a csv with algoritm runtime data.")
 	else:
