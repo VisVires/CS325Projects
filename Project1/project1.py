@@ -130,6 +130,7 @@ def a3(array):
 	start = 0
 	end = len(array)-1
 	low, high, maxSum = maxDivAndConq(array, start, end)
+	#return maxSubarray and sum of Array
 	return array[low:high+1] , maxSum
 
 def findMaxArr(A, left, mid, right):
@@ -165,16 +166,10 @@ def maxDivAndConq(A, low, high):
 		midLow, midHigh, midSum = findMaxArr(A, low, mid, high)
 		# find greatest subarray
 		if (leftSum >= rightSum and leftSum >= midSum):
-			# print "left" 
-			# print leftLow, leftHigh, leftSum
 			return  leftLow, leftHigh, leftSum
 		elif (rightSum >= leftSum and rightSum >= midSum):
-			# print "right" 
-			# print rightLow, rightHigh, rightSum
 			return rightLow, rightHigh, rightSum
 		else:
-			# print "middle" 
-			# print midLow, midHigh, midSum
 			return midLow, midHigh, midSum
 
 #Algorithm 4 - Linear-time
@@ -206,6 +201,7 @@ def main(argv):
 	outputFile = ""
 	notRunTimeRun = True
 	try:
+		# parse command line inputs
 		opts, args = getopt.getopt(argv, "i:o:", ["ifile=", "ofile=", "runTimeData"] )
 	except getopt.GetoptError:
 		print("project1.py -i <inputFile> -o <outputFile> --runTimeData\n"
@@ -216,14 +212,18 @@ def main(argv):
 		if opt == '-h':
 			print("project1.py -i <inputFile> -o <outputFile> --runTimeData\n"
               "program must be run with either input and output files or the option --runTimeData, runtime data an\n"
-                  "optional parameter that outputs a csv with algoritm runtime data.")
+                  "optional parameter that outputs a csv with algorithm runtime data.")
 			sys.exit()
 		elif opt in ("-i", "--ifile"):
 			inputFile = arg
 		elif opt in ("-o", "--ofile"):
 			outputFile = arg
 		elif opt in ("--runTimeData"):
+<<<<<<< HEAD
 			notRunTimeRun = False
+=======
+
+>>>>>>> origin/master
 			#Run each algorithm on the counterpart list of n 10x collecting time data and output time data to a .csv
 			repeatMeasurements = 10
 			nForA1 = [20, 40, 80, 160, 200, 350, 500, 650, 800, 1000]
@@ -239,7 +239,12 @@ def main(argv):
 			timeForA2 = []
 			timeForA3 = []
 			timeForA4 = []
+<<<<<<< HEAD
 			print("Algorithm 1")
+=======
+
+			# Run algorithm 1 for each n in nForA1 save to timeForA1 array using random arrays size n
+>>>>>>> origin/master
 			for i in range(len(nForA1)):
 				print(i)
 				arr = randomArray(nForA1[i])
@@ -249,7 +254,11 @@ def main(argv):
 			print(timeForA1)
 			fileOutputCSV(nForA1, timeForA1, "w", "Algorithm1")
 
+<<<<<<< HEAD
 			print("Algorithm 2")
+=======
+			# Run algorithm 2 for each n in nForA2 save to timeForA2 array using random arrays size n
+>>>>>>> origin/master
 			for i in range(len(nForA2)):
 				print(i)
 				arr = randomArray(nForA2[i])
@@ -259,7 +268,11 @@ def main(argv):
 			print(timeForA2)
 			fileOutputCSV(nForA2, timeForA2, "a", "Algorithm2")
 
+<<<<<<< HEAD
 			print("Algorithm 3")
+=======
+			# Run algorithm 3 for each n in nForA3 save to timeForA3 array using random arrays size n
+>>>>>>> origin/master
 			for i in range(len(nForA3)):
 				print(i)
 				arr = randomArray(nForA3[i])
@@ -269,7 +282,11 @@ def main(argv):
 			print(timeForA3)
 			fileOutputCSV(nForA3, timeForA3, "a", "Algorithm3")
 
+<<<<<<< HEAD
 			print("Algorithm 4")
+=======
+			# Run algorithm 4 for each n in nForA4 save to timeForA4 array using random arrays size n
+>>>>>>> origin/master
 			for i in range(len(nForA4)):
 				print(i)
 				arr = randomArray(nForA4[i])
@@ -286,7 +303,7 @@ def main(argv):
               "program must be run with either input and output files or the option --runTimeData, runtime data an\n"
                   "optional parameter that outputs a csv with algoritm runtime data.")
 	else:
-		#run each algorithm here
+		#run each algorithm on arrays from input file
 		answers = []
 		arraysFromFile = fileInput(inputFile)
 		for i in arraysFromFile:
