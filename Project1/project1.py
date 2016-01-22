@@ -154,11 +154,11 @@ def maxDivAndConq(A, low, high):
 		rightLow, rightHigh, rightSum = maxDivAndConq(A, mid + 1, high)
 		midLow, midHigh, midSum = findMaxArr(A, low, mid, high)
 		# find greatest subarray
-		if (leftSum >= rightSum & leftSum >= midSum):
+		if (leftSum >= rightSum and leftSum >= midSum):
 			# print "left" 
 			# print leftLow, leftHigh, leftSum
 			return  leftLow, leftHigh, leftSum
-		elif (rightSum >= leftSum & rightSum >= midSum):
+		elif (rightSum >= leftSum and rightSum >= midSum):
 			# print "right" 
 			# print rightLow, rightHigh, rightSum
 			return rightLow, rightHigh, rightSum
