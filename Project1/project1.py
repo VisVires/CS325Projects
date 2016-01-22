@@ -38,14 +38,14 @@ def fileOutput(fileName, startingArrays, MaxArrays):
 
 
 #File output of data for analysis
-def fileOutputCSV(startingArrays, maxArrays):
+def fileOutputCSV(sizeArr, timeArr, fileName):
 	# set output file as write file
-	of = open('output.csv', 'wb') 
+	of = open(fileName, 'wb') 
 	# set delimiter as Excel delimiter
 	writer = csv.writer(of)
 	# place arrays in CSV file
-	writer.writerows(startingArrays)
-	writer.writerows(maxArrays)
+	writer.writerow(sizeArr)
+	writer.writerows(timeArr)
 	of.close
 	print ("File Output CSV")
 
@@ -235,6 +235,8 @@ def main(argv):
 					a1(randomArray(nForA1[i]))
 					timeForA1[i].append(clock() - start)
 			print(timeForA1)
+			# output to CSV
+			fileOutputCSV(nForA1, timeForA1, "a1File.csv")
 
 			# Run algorithm 2 for each n in nForA2 save to timeForA2 array using random arrays size n
 			for i in range(len(nForA2)):
@@ -245,6 +247,8 @@ def main(argv):
 					a2(randomArray(nForA2[i]))
 					timeForA2[i].append(clock() - start)
 			print(timeForA2)
+			# output to CSV
+			fileOutputCSV(nForA2, timeForA2, "a2File.csv")
 
 			# Run algorithm 3 for each n in nForA3 save to timeForA3 array using random arrays size n
 			for i in range(len(nForA3)):
@@ -255,6 +259,8 @@ def main(argv):
 					a3(randomArray(nForA3[i]))
 					timeForA3[i].append(clock() - start)
 			print(timeForA3)
+			# output to CSV
+			fileOutputCSV(nForA3, timeForA3, "a3File.csv")
 
 			# Run algorithm 4 for each n in nForA4 save to timeForA4 array using random arrays size n
 			for i in range(len(nForA4)):
@@ -265,7 +271,8 @@ def main(argv):
 					a4(randomArray(nForA4[i]))
 					timeForA4[i].append(clock() - start)
 			print(timeForA4)
-
+			# output to CSV
+			fileOutputCSV(nForA4, timeForA4, "a4File.csv")
 
 	if inputFile == "" or outputFile == "":
 		print(inputFile + ", " + outputFile)
@@ -287,6 +294,7 @@ def main(argv):
 			answers.append(array)
 
 		fileOutput(outputFile, arraysFromFile, answers)
+
 
 if __name__ == "__main__":
 	main(sys.argv[1:])
