@@ -7,6 +7,8 @@ Group 11 - Karen Thrasher, William George, Kyle Livermore
 import timeit #Include for timing code
 import ast
 import random
+import sys
+import getopt
 import csv #Import CSV module
 
 #File input
@@ -15,7 +17,10 @@ def fileInput(fileName):
 	i = 0
 	array = []
 	for line in f:
-		array.append( ast.literal_eval(line))
+		try:
+			array.append( ast.literal_eval(line))
+		except:
+			print("Failed to read line in file: " + line)
 	f.close()
 	return array
 
@@ -23,10 +28,11 @@ def fileInput(fileName):
 #File output for grading
 def fileOutput(fileName, startingArrays, MaxArrays):
 	f = open(fileName, "w")
-	for i in range(len(startingArrays)):
-		f.write(str(startingArrays[i]) + "\n")
+	for i in range(len(MaxArrays)):
+		f.write(str(startingArrays[int(i/4)]) + "\n")
 		f.write(str(MaxArrays[i]) + "\n")
-		f.write(str(sum(MaxArrays[i])) + "\n\n")
+		sumArray = [int(j) for j in MaxArrays[i]]
+		f.write(str(sum(sumArray)) + "\n\n")
 	f.close()
 
 
@@ -40,7 +46,7 @@ def fileOutputCSV(startingArrays, maxArrays):
 	writer.writerows(startingArrays)
 	writer.writerows(maxArrays)
 	of.close
-	print "File Output CSV"
+	print ("File Output CSV")
 
 
 #Creates array of random numbers
@@ -80,7 +86,7 @@ def a1(array):
 				maxSumStart = currentSumStart
 				maxSumFinish = j+i+1
 	maxArray = array[maxSumStart : maxSumFinish + 1]
-	return maxArray
+	return maxArray, maxSum
 
 
 #Algorithm 2 - Better Enumeration
@@ -109,7 +115,7 @@ def a2(array):
 				maxSumStart = currentSumStart
 				maxSumFinish = j+i+1
 	maxArray = array[maxSumStart : maxSumFinish + 1]
-	return maxArray
+	return maxArray, maxSum
 
 
 
@@ -148,7 +154,7 @@ def maxDivAndConq(A, low, high):
 		return (low, high, A[low])
 	else:
 		# find mid element
-		mid = (low + high) / 2
+		mid = int((low + high) / 2)
 		# get left right and prefix+suffix subarrays
 		leftLow, leftHigh, leftSum = maxDivAndConq(A, low, mid)
 		rightLow, rightHigh, rightSum = maxDivAndConq(A, mid + 1, high)
@@ -188,23 +194,56 @@ def a4(array):
 				maxStartIndex = startIndex
 				maxEndIndex = endIndex
 	maxArray = array[maxStartIndex : maxEndIndex + 1]
-	return maxArray
+	return maxArray, maxSum
 
 
-def main():
+def main(argv):
+	inputFile = ""
+	outputFile = ""
+	try:
+		opts, args = getopt.getopt(argv, "i:o:", ["ifile=", "ofile=", "runTimeData"] )
+	except getopt.GetoptError:
+		print("project1.py -i <inputFile> -o <outputFile> --runTimeData\n"
+              "program must be run with either input and output files or the option --runTimeData, runtime data an\n"
+                  "optional parameter that outputs a csv with algoritm runtime data.")
+		sys.exit(2)
+	for opt, arg in opts:
+		if opt == '-h':
+			print("project1.py -i <inputFile> -o <outputFile> --runTimeData\n"
+              "program must be run with either input and output files or the option --runTimeData, runtime data an\n"
+                  "optional parameter that outputs a csv with algoritm runtime data.")
+			sys.exit()
+		elif opt in ("-i", "--ifile"):
+			inputFile = arg
+		elif opt in ("-o", "--ofile"):
+			outputFile = arg
+		elif opt in ("--runTimeData"):
+			randomArray()
+		#Run each algorithm on the counterpart list of n 10x collecting time data and output time data to a .csv
+			print("Place Holder2\n")
+	if inputFile == "" or outputFile == "":
+		print(inputFile + ", " + outputFile)
+		print("project1.py -i <inputFile> -o <outputFile> --runTimeData\n"
+              "program must be run with either input and output files or the option --runTimeData, runtime data an\n"
+                  "optional parameter that outputs a csv with algoritm runtime data.")
+	else:
+		#run each algorithm here
+		answers = []
+		arraysFromFile = fileInput(inputFile)
+		for i in arraysFromFile:
+			array, sum = a1(i)
+			answers.append(array)
+			array, sum = a2(i)
+			answers.append(array)
+			array, sum = a3(i)
+			answers.append(array)
+			array, sum = a4(i)
+			answers.append(array)
 
-	fileInput()
+		fileOutput(outputFile, arraysFromFile, answers)
 
-	randomArray()
-
-	a1()
-	a2()
-	a3()
-	a4()
-
-	fileOutput()
-
-main()
+if __name__ == "__main__":
+	main(sys.argv[1:])
 
 '''
 Sample timing code:
