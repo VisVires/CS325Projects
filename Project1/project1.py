@@ -10,6 +10,7 @@ import random
 import sys
 import getopt
 import csv #Import CSV module
+from time import clock
 
 #File input
 def fileInput(fileName):
@@ -218,9 +219,53 @@ def main(argv):
 		elif opt in ("-o", "--ofile"):
 			outputFile = arg
 		elif opt in ("--runTimeData"):
-			randomArray()
-		#Run each algorithm on the counterpart list of n 10x collecting time data and output time data to a .csv
-			print("Place Holder2\n")
+			#Run each algorithm on the counterpart list of n 10x collecting time data and output time data to a .csv
+			nForA1 = [20, 40, 80, 160, 200, 350, 500, 650, 800, 1000]
+			nForA2 = [20, 40, 80, 160, 200, 350, 500, 650, 800, 1000]
+			nForA3 = [20, 40, 80, 160, 200, 350, 500, 650, 800, 1000]
+			nForA4 = [20, 40, 80, 160, 200, 350, 500, 650, 800, 1000]
+			timeForA1 = []
+			timeForA2 = []
+			timeForA3 = []
+			timeForA4 = []
+
+			for i in range(len(nForA1)):
+				print(i)
+				timeForA1.append([])
+				for j in range(10):
+					start = clock()
+					a1(randomArray(nForA1[i]))
+					timeForA1[i].append(clock() - start)
+			print(timeForA1)
+
+			for i in range(len(nForA2)):
+				print(i)
+				timeForA2.append([])
+				for j in range(10):
+					start = clock()
+					a2(randomArray(nForA2[i]))
+					timeForA2[i].append(clock() - start)
+			print(timeForA2)
+
+			for i in range(len(nForA3)):
+				print(i)
+				timeForA3.append([])
+				for j in range(10):
+					start = clock()
+					a3(randomArray(nForA3[i]))
+					timeForA3[i].append(clock() - start)
+			print(timeForA3)
+
+			for i in range(len(nForA4)):
+				print(i)
+				timeForA4.append([])
+				for j in range(10):
+					start = clock()
+					a4(randomArray(nForA4[i]))
+					timeForA4[i].append(clock() - start)
+			print(timeForA4)
+
+
 	if inputFile == "" or outputFile == "":
 		print(inputFile + ", " + outputFile)
 		print("project1.py -i <inputFile> -o <outputFile> --runTimeData\n"
