@@ -224,13 +224,13 @@ def main(argv):
 
 			#Run each algorithm on the counterpart list of n 10x collecting time data and output time data to a .csv
 			repeatMeasurements = 10
-			nForA1 = [20, 40, 80, 160, 200, 350, 500, 650, 800, 1000]
+			nForA1 = [10, 20, 40, 80, 160, 200, 350, 500, 650, 800, 1000, 1500]
 			nForA1 = list(itertools.chain.from_iterable(itertools.repeat(x,10) for x in nForA1))
-			nForA2 = [20, 40, 80, 160, 200, 350, 500, 650, 800, 1000]
+			nForA2 = [20, 40, 80, 160, 200, 350, 500, 650, 800, 1000, 2000, 3000]
 			nForA2 = list(itertools.chain.from_iterable(itertools.repeat(x,10) for x in nForA2))
-			nForA3 = [20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240]
+			nForA3 = [10, 25, 63, 156, 391, 977, 2442, 6104, 15259, 38147, 95368, 238419 ]
 			nForA3 = list(itertools.chain.from_iterable(itertools.repeat(x,10) for x in nForA3))
-			nForA4 = [20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240]
+			nForA4 = [10, 50, 100, 500, 1000, 5000, 10000, 50000, 100000, 500000, 1000000, 5000000]
 			nForA4 = list(itertools.chain.from_iterable(itertools.repeat(x,10) for x in nForA4))
 			print(nForA1)
 			timeForA1 = []
