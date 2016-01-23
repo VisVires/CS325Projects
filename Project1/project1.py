@@ -13,6 +13,7 @@ import csv #Import CSV module
 from time import clock
 import itertools
 
+
 #File input
 def fileInput(fileName):
 	f = open(fileName, "r")
@@ -39,7 +40,6 @@ def fileOutput(fileName, startingArrays, MaxArrays):
 
 
 #File output of data for analysis
-
 def fileOutputCSV(n, timeData, mode, Alg):
 	# set output file as write file
 	of = open('output.csv', mode)
@@ -63,6 +63,7 @@ def randomArray(n, seed = 0):
 	for i in range(n):
 		randArray.append(random.randrange(-100,100))
 	return randArray
+
 
 #Algorithm 1 - Enumeration
 def a1(array):
@@ -122,7 +123,6 @@ def a2(array):
 	return maxArray, maxSum
 
 
-
 #Algorithm 3 - Divide and Conquer
 def a3(array):
 	if (len(array) == 0):
@@ -132,6 +132,7 @@ def a3(array):
 	low, high, maxSum = maxDivAndConq(array, start, end)
 	#return maxSubarray and sum of Array
 	return array[low:high+1] , maxSum
+
 
 def findMaxArr(A, left, mid, right):
 	# Find Left Max
@@ -153,6 +154,7 @@ def findMaxArr(A, left, mid, right):
 			maxRight = j
 	return (maxLeft, maxRight, leftSum + rightSum)
 
+
 def maxDivAndConq(A, low, high):
 	# base case
 	if (high == low):
@@ -171,6 +173,7 @@ def maxDivAndConq(A, low, high):
 			return rightLow, rightHigh, rightSum
 		else:
 			return midLow, midHigh, midSum
+
 
 #Algorithm 4 - Linear-time
 def a4(array):
@@ -316,10 +319,3 @@ def main(argv):
 
 if __name__ == "__main__":
 	main(sys.argv[1:])
-
-'''
-Sample timing code:
-timer = timeit.Timer(stmt='fibIterative(500000)', setup='from __main__ import fibIterative')
-print timer.timeit(number=10)
-#Reference: http://www.dreamincode.net/forums/topic/288071-timeit-module/
-'''
