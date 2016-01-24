@@ -20,8 +20,9 @@ def fileInput(fileName):
 	i = 0
 	array = []
 	for line in f:
-		index = line.index("\r")
-		line = line[0:index]
+		if "\r" in line:
+			index = line.index("\r")
+			line = line[0:index]
 		try:
 			array.append( ast.literal_eval(line))
 		except:
