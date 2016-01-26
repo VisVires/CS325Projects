@@ -43,17 +43,17 @@ def coinCountMemo(coins, change, memo):
 
 # Bottom-up DP
 def coinCountDP(coins, change, minCoins):
-	for cents in range(change+1):
-		# Set min
-		totalCoins = cents
-		# Iterate through each coin that is less than cents
-		for c in coins:
-			if c <= cents:
-				# find the minimum number of coins needed to make cents and place in minCoins list
-				if minCoins[cents - c] + 1 < totalCoins:
-					totalCoins = minCoins[cents - c] + 1
-		minCoins[cents] = totalCoins
-	return minCoins[change]
+    for amount in range(change+1):
+    # Set min
+    totalCoins = amount
+    # Iterate through each coin that is less than cents
+    for i in coins:
+         if i <= amount:
+        # find the minimum number of coins needed to make cents and place in minCoins list
+            if minCoins[amount - i] + 1 < totalCoins:
+                totalCoins = minCoins[amount - i] + 1
+                minCoins[amount] = totalCoins
+    return minCoins[change]
 
 def coinCountGreedy(coins, change, coinsReturned):
 	coinsUsed = 0
