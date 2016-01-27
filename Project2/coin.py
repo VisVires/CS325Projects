@@ -1,7 +1,7 @@
 n = 63
 coins = [1,5,10,25]
  
-def coinCountRecurse(coins, change):
+def changeslow(coins, change):
 	# set new minCoins
 	minCoins = change
 	if change in coins:
@@ -42,7 +42,7 @@ def coinCountRecurse(coins, change):
 #  	return minCoins
  
  # Bottom-up DP
-def coinCountDP(coins, change):
+def changedp(coins, change):
 	minCoins = [0] * (change + 1)
  	for amount in range(change+1):
  		# Set min
@@ -56,7 +56,7 @@ def coinCountDP(coins, change):
  		minCoins[amount] = totalCoins
  	return minCoins[change]
  
-def coinCountGreedy(coins, change):
+def changegreedy(coins, change):
  	coinsReturned = []
  	coinsUsed = 0
  	if change in coins:
@@ -73,6 +73,6 @@ def coinCountGreedy(coins, change):
  	return coinsUsed, coinsReturned
  
  
-print (coinCountGreedy(coins, n))
-print (coinCountDP(coins, n))
-print (coinCountRecurse(coins, n))
+print (changegreedy(coins, n))
+print (changedp(coins, n))
+print (changeslow(coins, n))
