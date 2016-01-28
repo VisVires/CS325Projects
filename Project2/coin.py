@@ -65,7 +65,6 @@ def changedp(coins, change):
  	remainder = change
  	# move backwards through array to get used coins for finalList
  	while remainder > 0:
- 		print coinsUsed[remainder]
  		finalList.append(coinsUsed[remainder])
  		remainder = remainder - coinsUsed[remainder]
  	# end while
