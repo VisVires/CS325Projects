@@ -4,6 +4,7 @@ coins = [1,5,10,25]
 def changeslow(coins, change):
 	# set new minCoins
 	minCoins = change
+	usedCoins = []
 	if change in coins:
 		return 1
  	else:
@@ -12,7 +13,7 @@ def changeslow(coins, change):
  			# if coins are less than remaining change
  			if i <= change:
  				# add minimum coins to numCoins
- 				numCoins = 1 + coinCountRecurse(coins, change - i)
+ 				numCoins = 1 + changeslow(coins, change - i)
  				# if num coins is less than current minimum, set new minimum
  				if numCoins < minCoins:
  					minCoins = numCoins
