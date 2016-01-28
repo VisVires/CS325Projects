@@ -1,5 +1,5 @@
 n = 63
-coins = [1,5,10,25]
+coins = [1,5,10,21,25]
  
 def changeslow(coins, change):
 	# set new minCoins
@@ -59,6 +59,7 @@ def changedp(coins, change):
  					coin = c
  		# end for
  		minCoins[amount] = totalCoins
+ 		print minCoins
  		coinsUsed[amount] = coin
  	# end for
  	finalList = []
@@ -69,7 +70,29 @@ def changedp(coins, change):
  		remainder = remainder - coinsUsed[remainder]
  	# end while
  	return minCoins[change], finalList
- 
+
+# def changedp2(coins, change):
+# 	# initialize min coins
+# 	minCoins = [[0]*(change + 1) for _ in range(len(coins) + 1)]
+# 	# set columns to change amounts
+# 	for i in range(change + 1):
+# 		minCoins[0][i]
+#  	used = 0
+#  	# iterate through coin array
+#  	for c in range(1, len(coins) + 1):
+#  		# iterate through each possible amount
+#  		for amount in range (1, change + 1):
+#  			# if amount is equal to a coin denomination set min coins for amount to 1
+#  			if coins[c - 1] == amount:
+#  				minCoins[c][amount] = 1
+#  			# if amount is less than coin denomination
+#  			elif coins[c - 1] > amount:
+#  				minCoins[c][amount] = minCoins[c - 1][amount]
+#  			# if 
+# 			else:
+# 				minCoins[c][amount] = min(minCoins[c - 1][amount], 1 + minCoins[c][amount - coins[c - 1]])
+# 	return minCoins[-1][-1]				
+
 def changegreedy(coins, change):
  	coinsReturned = []
  	coinsUsed = 0
@@ -89,4 +112,5 @@ def changegreedy(coins, change):
  
 print (changegreedy(coins, n))
 print (changedp(coins, n))
+# print (changedp2(coins, n))
 print (changeslow(coins, n))
