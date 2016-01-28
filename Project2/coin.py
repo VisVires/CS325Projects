@@ -45,7 +45,9 @@ def changeslow(coins, change):
  # Bottom-up DP
 def changedp(coins, change):
 	minCoins = [0] * (change + 1)
- 	for amount in range(change+1):
+	coinsUsed = [0] * (change + 1)
+	coin = 1
+ 	for amount in range(change + 1):
  		# Set min
 		totalCoins = amount
  		# Iterate through each coin that is less than amount
@@ -54,8 +56,18 @@ def changedp(coins, change):
  				# find the minimum number of coins needed to make amount and place in minCoins list
  				if minCoins[amount - c] + 1 < totalCoins:
  					totalCoins = minCoins[amount - c] + 1
+ 					coin = c
+ 		# end for
  		minCoins[amount] = totalCoins
- 	return minCoins[change]
+ 		coinsUsed[amount] = coin
+ 	# end for
+ 	finalList = []
+ 	remainder = change
+ 	while remainder > 0:
+ 		print coinsUsed[remainder]
+ 		finalList.append(coinsUsed[remainder])
+ 		remainder = remainder - coinsUsed[remainder]
+ 	return minCoins[change], finalList
  
 def changegreedy(coins, change):
  	coinsReturned = []
