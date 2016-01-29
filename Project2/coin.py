@@ -66,15 +66,15 @@ def changedp2(coins, change):
 	# end for
 	
 	# iterate through coins for each amount
-	for c in coins:
+	for c in range(1, len(coins) + 1):
 		for amount in range(1, change + 1):
-			# 
-			if amount - c >= 0:
-				low = minCoins[c][amount-c]
+			# check if coin denomination is less than amount
+			if coins[c - 1] <= amount:
+				low = minCoins[c][amount-coins[c - 1]]
 			else:
 				low = float('inf')
-			# 
-			minCoins[c-2][amount] = min(minCoins[c-1][amount], 1 + low)
+			# set table value
+			minCoins[c][amount] = min(minCoins[c-1][amount], 1 + low)
 		# end for
 	# end for
 	return minCoins[len(coins)][change]
