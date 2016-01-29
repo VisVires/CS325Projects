@@ -77,6 +77,7 @@ def changedp2(coins, change):
 			minCoins[c][amount] = min(minCoins[c-1][amount], 1 + low)
 		# end for
 	# end for
+	print minCoins
 	return minCoins[len(coins)][change]
 
 
