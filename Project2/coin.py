@@ -1,3 +1,10 @@
+'''
+Project 2 - Coin Change
+CS325 
+Group 11 - William George, Karen Thrasher, Kyle Livermore
+
+'''
+
 n = 63
 coins = [1,5,10,21,25]
  
@@ -110,7 +117,10 @@ def changegreedy(coins, change):
  	return coinsUsed, coinsReturned
  
  
-print (changegreedy(coins, n))
-print (changedp(coins, n))
-# print (changedp2(coins, n))
-print (changeslow(coins, n))
+def main():
+	print (changegreedy(coins, n))
+	print (changedp(coins, n))
+	# print (changedp2(coins, n))
+	print (changeslow(coins, n))
+
+main()
