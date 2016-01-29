@@ -11,20 +11,20 @@ coins = [1,5,10,21,25]
 def changeslow(coins, change):
 	# set new minCoins
 	minCoins = change
-	usedCoins = []
+	finalList = []
 	if change in coins:
 		return 1
  	else:
  		# Iterate through all coins
- 		for i in coins:
+ 		for c in coins:
  			# if coins are less than remaining change
- 			if i <= change:
+ 			if c <= change:
  				# add minimum coins to numCoins
- 				numCoins = 1 + changeslow(coins, change - i)
+ 				numCoins = 1 + changeslow(coins, change - c)
  				# if num coins is less than current minimum, set new minimum
  				if numCoins < minCoins:
  					minCoins = numCoins
- 		return minCoins
+ 	return minCoins
  	
  
  # Bottom-up DP
@@ -56,6 +56,29 @@ def changedp(coins, change):
  	# end while
  	return minCoins[change], finalList
 		
+def changedp2(coins, change):
+	# make 0 multidimensional array with dimensions amount x len(coins) 
+	minCoins = [[0] * (change + 1) for c in range(len(coins) + 1)]
+	
+	# preset each value for first row as inf
+	for amount in range(1, change + 1):
+		minCoins[0][amount] = float('inf')
+	# end for
+	
+	# iterate through coins for each amount
+	for c in coins:
+		for amount in range(1, change + 1):
+			# 
+			if amount - c >= 0:
+				low = minCoins[c][amount-c]
+			else:
+				low = float('inf')
+			# 
+			minCoins[c-2][amount] = min(minCoins[c-1][amount], 1 + low)
+		# end for
+	# end for
+	return minCoins[len(coins)][change]
+
 
 def changegreedy(coins, change):
  	coinsReturned = []
@@ -83,6 +106,7 @@ def changegreedy(coins, change):
 def main():
 	print (changegreedy(coins, n))
 	print (changedp(coins, n))
+	print (changedp2(coins, n))
 	print (changeslow(coins, n))
 
 main()
