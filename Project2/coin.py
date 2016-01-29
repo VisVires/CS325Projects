@@ -27,28 +27,6 @@ def changeslow(coins, change):
  		return minCoins
  	
  
-# def coinCountMemo(coins, change, memo):
-#  	#set new minCoins
-#  	minCoins = change
-#  	# if change is one of our starting denominations return
-#  	if change in coins:
-#  		memo[change] = 1
-#  		return 1
-#  	# if change has already been calculated return
-#  	elif memo[change] > 0:
-#  		return memo[change]
-#  	else:
-#  		# For each coin check if less than change
-#  		for i in coins:
-#  			if i <= change:
-#  				# recursively find next smallest change
-#  				numCoins = 1 + coinCountDP(coins, change - i, memo)
-# 				# if less than minCoins add to memo
-#  				if numCoins < minCoins:
-#  					minCoins = numCoins
-#  					memo[change] = minCoins
-#  	return minCoins
- 
  # Bottom-up DP
 def changedp(coins, change):
 	minCoins = [0] * (change + 1)
@@ -66,7 +44,7 @@ def changedp(coins, change):
  					coin = c
  		# end for
  		minCoins[amount] = totalCoins
- 		print minCoins
+ 		# print minCoins
  		coinsUsed[amount] = coin
  	# end for
  	finalList = []
@@ -77,42 +55,27 @@ def changedp(coins, change):
  		remainder = remainder - coinsUsed[remainder]
  	# end while
  	return minCoins[change], finalList
-
-# def changedp2(coins, change):
-# 	# initialize min coins
-# 	minCoins = [[0]*(change + 1) for _ in range(len(coins) + 1)]
-# 	# set columns to change amounts
-# 	for i in range(change + 1):
-# 		minCoins[0][i]
-#  	used = 0
-#  	# iterate through coin array
-#  	for c in range(1, len(coins) + 1):
-#  		# iterate through each possible amount
-#  		for amount in range (1, change + 1):
-#  			# if amount is equal to a coin denomination set min coins for amount to 1
-#  			if coins[c - 1] == amount:
-#  				minCoins[c][amount] = 1
-#  			# if amount is less than coin denomination
-#  			elif coins[c - 1] > amount:
-#  				minCoins[c][amount] = minCoins[c - 1][amount]
-#  			# if 
-# 			else:
-# 				minCoins[c][amount] = min(minCoins[c - 1][amount], 1 + minCoins[c][amount - coins[c - 1]])
-# 	return minCoins[-1][-1]				
+		
 
 def changegreedy(coins, change):
  	coinsReturned = []
  	coinsUsed = 0
+ 	remainder = change
+ 	# check if coin denomination exists in array
  	if change in coins:
  		coinsReturned.append(change)
  		coinsUsed = 1
  		return coinsUsed, coinsReturned
  	else:
+ 		# sort list in descending order
  		coinSort = sorted(coins, reverse=True)
+ 		# iterate through sorted list
  		for c in coinSort:
- 			while change > 0 and c <= change:
+ 			# while coin is less than remainder subtract coin 
+ 			# add to returned array
+ 			while c <= remainder:
  				coinsReturned.append(c)
- 				change = change - c
+ 				remainder = remainder - c
  				coinsUsed = coinsUsed + 1
  	return coinsUsed, coinsReturned
  
@@ -120,7 +83,6 @@ def changegreedy(coins, change):
 def main():
 	print (changegreedy(coins, n))
 	print (changedp(coins, n))
-	# print (changedp2(coins, n))
 	print (changeslow(coins, n))
 
 main()
