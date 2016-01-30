@@ -12,10 +12,8 @@ import getopt
 import csv #Import CSV module
 from time import clock
 import itertools
-
-#n = 63
-#coins = [1,5,10,21,25]
  
+# slow recursive algorithm 
 def changeslow(coins, change):
 	# set new minCoins
 	minCoins = change
@@ -64,6 +62,7 @@ def changedp(coins, change):
  	# end while
  	return minCoins[change], finalList
 		
+# table based dynamic programming algorithm
 def changedp2(coins, change):
 	# make 0 multidimensional array with dimensions amount x len(coins) 
 	minCoins = [[0] * (change + 1) for c in range(len(coins) + 1)]
@@ -88,7 +87,7 @@ def changedp2(coins, change):
 	print(minCoins)
 	return minCoins[len(coins)][change]
 
-
+# greedy algorithm
 def changegreedy(coins, change):
  	coinsReturned = []
  	coinsUsed = 0
@@ -110,6 +109,7 @@ def changegreedy(coins, change):
  				remainder = remainder - c
  				coinsUsed = coinsUsed + 1
  	return coinsUsed, coinsReturned
+
 
 def runProblemsFromFile(inputFile):
 	f = open(inputFile + ".txt", "r")
