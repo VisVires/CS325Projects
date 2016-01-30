@@ -217,7 +217,7 @@ def _minCoinDataHelper(V, start, stop, step, fileName):
 	# set delimiter as Excel delimiter
 	writer = csv.writer(of)
 	# place arrays in CSV file
-	writer.writerheader(["A","number of coins Greedy","number of coins DP"])
+	writer.writerheader(["A","Greedy","DP"])
 	writer.writerows(problem)
 	of.close()
 
@@ -252,16 +252,16 @@ def runMinCoinDataCollect():
 	_minCoinDataHelperWithSlow(VFour, 50, 200, 1, "problem4small.csv")
 
 	#Problem 5a
-	_minCoinDataHelper(VFive1, 2010, 2200, 5, "problem4.csv")
-	_minCoinDataHelperWithSlow(VFive1, 50, 200, 1, "problem4small.csv")
+	_minCoinDataHelper(VFive1, 2010, 2200, 5, "problem5a.csv")
+	_minCoinDataHelperWithSlow(VFive1, 50, 200, 1, "problem5asmall.csv")
 
 	#Problem 5b
-	_minCoinDataHelper(VFive2, 2010, 2200, 5, "problem4.csv")
-	_minCoinDataHelperWithSlow(VFive2, 50, 200, 1, "problem4small.csv")
+	_minCoinDataHelper(VFive2, 2010, 2200, 5, "problem5b.csv")
+	_minCoinDataHelperWithSlow(VFive2, 50, 200, 1, "problem5bsmall.csv")
 
 	#Problem 6
-	_minCoinDataHelper(VSix, 2010, 2200, 5, "problem4.csv")
-	_minCoinDataHelperWithSlow(VSix, 50, 200, 1, "problem4small.csv")
+	_minCoinDataHelper(VSix, 2010, 2200, 5, "problem6.csv")
+	_minCoinDataHelperWithSlow(VSix, 50, 200, 1, "problem6small.csv")
 
 def main(argv):
 	#print (changegreedy(coins, n))
