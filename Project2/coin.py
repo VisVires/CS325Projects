@@ -5,7 +5,6 @@ Group 11 - William George, Karen Thrasher, Kyle Livermore
 
 '''
 
-
 import ast
 import sys
 import getopt
@@ -66,7 +65,7 @@ def changedp(coins, change):
 def changedp2(coins, change):
 	# make 0 multidimensional array with dimensions amount x len(coins) 
 	minCoins = [[0] * (change + 1) for c in range(len(coins) + 1)]
-	
+	coinsUsed = [0] * (change + 1)
 	# preset each value for first row as inf
 	for amount in range(1, change + 1):
 		minCoins[0][amount] = float('inf')
@@ -78,14 +77,21 @@ def changedp2(coins, change):
 			# check if coin denomination is less than amount
 			if coins[c - 1] <= amount:
 				low = minCoins[c][amount-coins[c - 1]]
+			if minCoins[c-1][amount] <= 1 + low:
+				minCoins[c][amount] = minCoins[c-1][amount]
 			else:
-				low = float('inf')
-			# set table value
-			minCoins[c][amount] = min(minCoins[c-1][amount], 1 + low)
+				minCoins[c][amount] = 1 + low
+				coinsUsed[amount] = coins[c-1]
 		# end for
 	# end for
-	print(minCoins)
-	return minCoins[len(coins)][change]
+	finalList = []
+ 	remainder = change
+ 	# move backwards through array to get used coins for finalList
+ 	while remainder > 0:
+ 		finalList.append(coinsUsed[remainder])
+ 		remainder = remainder - coinsUsed[remainder]
+ 	# end while
+	return minCoins[len(coins)][change], finalList
 
 # greedy algorithm
 def changegreedy(coins, change):
