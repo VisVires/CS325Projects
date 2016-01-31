@@ -86,9 +86,12 @@ def changeslow(coins, change):
 '''
 
 #Brute Force
-#Reference https://www.youtube.com/watch?v=EScqJEEKC10
-#Reference http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python
-#Reference http://www.tutorialspoint.com/python/python_pass_statement.htm
+#Reference algorithm
+	#https://www.youtube.com/watch?v=EScqJEEKC10
+#Reference yield
+	#http://stackoverflow.com/questions/231767/what-does-the-yield-keyword-do-in-python
+#Reference pass
+	#http://www.tutorialspoint.com/python/python_pass_statement.htm
 def changeslow(available_coins, n, used_coins):
 	#If sum equals target - found
 	if sum(used_coins) == n:
