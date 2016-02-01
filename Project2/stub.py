@@ -41,41 +41,40 @@ def changedp(coins, change):
 		# end for
 	# end for
 	finalList = []
- 	remainder = change
- 	# move backwards through array to get used coins for finalList
- 	while remainder > 0:
-		coinList[coinsUsed[remainder]] = coinList[coinsUsed[remainder]] + 1  
- 		finalList.append(coinsUsed[remainder])
- 		remainder = remainder - coinsUsed[remainder]
- 	# end while
+	remainder = change
+	# move backwards through array to get used coins for finalList
+	while remainder > 0:
+		coinList[coinsUsed[remainder]] = coinList[coinsUsed[remainder]] + 1
+		finalList.append(coinsUsed[remainder])
+		remainder = remainder - coinsUsed[remainder]
+	# end while
 	return minCoins[len(coins)][change], coinList.values()
 
- # greedy algorithm
+# greedy algorithm
 def changegreedy(coins, change):
- 	coinsReturned = []
- 	coinsUsed = 0
- 	remainder = change
- 	coinList = OrderedDict(sorted({}))
- 	for c in coins:
-		coinList.setdefault(c, 0)
- 	# check if coin denomination exists in array
- 	if change in coins:
- 		coinsReturned.append(change)
- 		coinsUsed = 1
- 		return coinsUsed, coinsReturned
- 	else:
- 		# sort list in descending order
- 		coinSort = sorted(coins, reverse=True)
- 		# iterate through sorted list
- 		for c in coinSort:
- 			# while coin is less than remainder subtract coin 
- 			# add to returned array
- 			while c <= remainder:
- 				coinsReturned.append(c)
- 				coinList[c] = coinList[c] + 1
- 				remainder = remainder - c
- 				coinsUsed = coinsUsed + 1
- 	return coinsUsed, coinList.values()
+	coinsReturned = []
+	coinsUsed = 0
+	remainder = change
+	coinList = OrderedDict(sorted({}))
+	for c in coins:
+		coinList.setdefault(c, 0) # check if coin denomination exists in array
+	if change in coins:
+		coinsReturned.append(change)
+		coinsUsed = 1
+		return coinsUsed, coinsReturned
+	else:
+	# sort list in descending order
+		coinSort = sorted(coins, reverse=True)
+	# iterate through sorted list
+		for c in coinSort:
+			# while coin is less than remainder subtract coin
+			# add to returned array
+			while c <= remainder:
+				coinsReturned.append(c)
+				coinList[c] = coinList[c] + 1
+				remainder = remainder - c
+				coinsUsed = coinsUsed + 1
+	return coinsUsed, coinList.values()
 '''
 # slow recursive algorithm 
 def changeslow(coins, change):
@@ -161,62 +160,63 @@ def changeslow(coins, n):
 	return optimal_len, blank_coins
 
 def main():
-	print "Test Case 1:"
-	print "All return C=[1,1,1,1] m=4"
+	print ("Test Case 1:")
+	print ("All return C=[1,1,1,1] m=4")
 	blank_coins =[]
 	coins = [1,2,4,8]
 	n = 15
 
-	print "Dynamic:"
+	print ("Dynamic:")
 	print (changedp(coins, n))
 
-	print "Greedy:"
+	print ("Greedy:")
 	print (changegreedy(coins, n))
 
-	print "Brute Force:"
-	print changeslow(coins, n) #Prints brute
+	print ("Brute Force:")
+	print (changeslow(coins, n)) #Prints brute
 
-	print"\n"
+	print("\n")
 
-	print "Test Case 2:"
+	print ("Test Case 2:")
 	coins = [1,3,7,12]
 	n = 29
 
-	print "Dynamic:"
-	print "Should return C=[0,1,2,1] m=4"
+	print ("Dynamic:")
+	print ("Should return C=[0,1,2,1] m=4")
 	print (changedp(coins, n))
 
-	print "Greedy:"
-	print "Should return C=[2,1,0,2] m=5"
+	print ("Greedy:")
+	print ("Should return C=[2,1,0,2] m=5")
 	print (changegreedy(coins, n))
 
-	print "Brute Force:"
-	print "Should return C=[0,1,2,1] m=4"
+	print ("Brute Force:")
+	print ("Should return C=[0,1,2,1] m=4")
 	#optimal_sol = slow_helper(coins, n)
 	#optimal_len = len(optimal_sol)
 	#brute_optimal = [optimal_len, optimal_sol]
 	#print brute_optimal
-	print changeslow(coins, n) #Prints brute
+	print (changeslow(coins, n)) #Prints brute
 
-	print"\n"
+	print("\n")
 
-	print "Test Case 3:"
-	print "All return C=[0,0,1,2] m=3"
+	print ("Test Case 3:")
+	print ("All return C=[0,0,1,2] m=3")
 	coins = [1,3,7,12]
 	n = 31
 
-	print "Dynamic:"
+	print ("Dynamic:")
 	print (changedp(coins, n))
 
-	print "Greedy:"
+	print ("Greedy:")
 	print (changegreedy(coins, n))
 
-	print "Brute Force:"
+	print ("Brute Force:")
 	#optimal_sol = slow_helper(coins, n)
 	#optimal_len = len(optimal_sol)
 	#brute_optimal = [optimal_len, optimal_sol]
 	#print brute_optimal
-	print changeslow(coins, n) #Prints brute
+	print (changeslow(coins, n)) #Prints brute
 
 
-main()
+if __name__ == "__main__":
+	main()
