@@ -137,7 +137,7 @@ def slow_helper(coins, n):
 def main():
 	print "Test Case 1:"
 	print "All return C=[1,1,1,1] m=4"
-	blank_coins =[]
+	blank_coins =[0,0,0,0]
 	coins = [1,2,4,8]
 	n = 15
 
@@ -150,7 +150,19 @@ def main():
 	print "Brute Force:"
 	optimal_sol = slow_helper(coins, n)
 	optimal_len = len(optimal_sol)
-	brute_optimal = [optimal_len, optimal_sol]
+	#brute_optimal = [optimal_len, optimal_sol]
+
+
+	for c in coins:
+		if c in optimal_sol:
+			updateCoin = blank_coins[-1]
+			updateCoin = updateCoin + 1
+			blank_coins[-1] = updateCoin
+		#else:
+		#	blank_coins[c] + 0
+
+	brute_optimal = [optimal_len, blank_coins]
+
 	print brute_optimal
 
 	print"\n"
