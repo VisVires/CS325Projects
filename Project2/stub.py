@@ -124,6 +124,8 @@ def changeslow(available_coins, n, used_coins):
 		for c in changeslow(available_coins[1:], n, used_coins):
 			yield c
 
+#Helper function for changeslow
+#Converts list of solutions into returning only the smallest solution
 def slow_helper(coins, n):
 	solutions = [s for s in changeslow(coins, n, [])]
 	#Displays possible solutions:
@@ -134,6 +136,29 @@ def slow_helper(coins, n):
 	#print optimal_sol = min(solutions, key=len)
 	#print optimal_length = len(optimal_sol)
 	return min(solutions, key=len)
+
+#Helper function for changeslow
+#Takes coins and n - finds minimal solution and length and returns
+#as a count of each coin and the total number of coins needed
+def brute_helper(coins, n):
+	blank_coins =[]
+
+	optimal_sol = slow_helper(coins, n) #Gets optimal solution
+	optimal_len = len(optimal_sol) #Gets optimal solution length
+
+	#Converts list of coins into count for each coin
+	for c in coins:
+		if c in optimal_sol:
+			#blank_coins[c].append = optimal_sol.count(c)
+			blank_coins.insert(c, optimal_sol.count(c))
+			#updateCoin = blank_coins[-1]
+			#updateCoin = updateCoin + 1
+			#blank_coins[-1] = updateCoin
+		elif c not in optimal_sol:
+			#blank_coins[c] = 0
+			blank_coins.insert(c, 0)
+
+	return optimal_len, blank_coins
 
 def main():
 	print "Test Case 1:"
@@ -149,10 +174,7 @@ def main():
 	print (changegreedy(coins, n))
 
 	print "Brute Force:"
-	optimal_sol = slow_helper(coins, n)
-	optimal_len = len(optimal_sol)
-	brute_optimal = [optimal_len, optimal_sol]
-	print brute_optimal
+	print brute_helper(coins, n) #Prints brute
 
 	print"\n"
 
@@ -170,9 +192,11 @@ def main():
 
 	print "Brute Force:"
 	print "Should return C=[0,1,2,1] m=4"
-	optimal_sol = slow_helper(coins, n)
-	optimal_len = len(optimal_sol)
-	brute_optimal = [optimal_len, optimal_sol]
+	#optimal_sol = slow_helper(coins, n)
+	#optimal_len = len(optimal_sol)
+	#brute_optimal = [optimal_len, optimal_sol]
+	#print brute_optimal
+	brute_optimal = brute_helper(coins, n)
 	print brute_optimal
 
 	print"\n"
@@ -189,10 +213,11 @@ def main():
 	print (changegreedy(coins, n))
 
 	print "Brute Force:"
-	optimal_sol = slow_helper(coins, n)
-	optimal_len = len(optimal_sol)
-	brute_optimal = [optimal_len, optimal_sol]
-	print brute_optimal
+	#optimal_sol = slow_helper(coins, n)
+	#optimal_len = len(optimal_sol)
+	#brute_optimal = [optimal_len, optimal_sol]
+	#print brute_optimal
+	print brute_helper(coins, n) #Prints brute
 
 
 main()
