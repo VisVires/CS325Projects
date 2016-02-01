@@ -12,13 +12,14 @@ import getopt
 import csv #Import CSV module
 from time import clock
 import itertools
+from collections import OrderedDict
 
 # table based dynamic programming algorithm
 def changedp(coins, change):
 	# make 0 multidimensional array with dimensions amount x len(coins) 
 	minCoins = [[0] * (change + 1) for c in range(len(coins) + 1)]
 	coinsUsed = [0] * (change + 1)
-	coinList = {}
+	coinList = OrderedDict(sorted({}))
 	for c in coins:
 		coinList.setdefault(c, 0)
 	# preset each value for first row as inf
@@ -54,7 +55,7 @@ def changegreedy(coins, change):
  	coinsReturned = []
  	coinsUsed = 0
  	remainder = change
- 	coinList = {}
+ 	coinList = OrderedDict(sorted({}))
  	for c in coins:
 		coinList.setdefault(c, 0)
  	# check if coin denomination exists in array
