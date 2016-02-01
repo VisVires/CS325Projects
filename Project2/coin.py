@@ -74,10 +74,12 @@ def runTimeDataCollect():
 	repeatMeasurements = 10
 	AForSlow = [10, 17, 25, 37, 50, 67, 75, 89, 100, 113, 125, 150]
 	AForSlow = list(itertools.chain.from_iterable(itertools.repeat(x,repeatMeasurements) for x in AForSlow))
-	AForGreedy =  [200, 350, 500, 650, 800, 1000, 2000, 3000, 6000, 10000, 20000, 50000]
-	AForGreedy = list(itertools.chain.from_iterable(itertools.repeat(x,repeatMeasurements) for x in AForGreedy))
-	AForDP = [200, 350, 500, 650, 800, 1000, 2000, 3000, 6000, 10000, 20000, 50000 ]
-	AForDP = list(itertools.chain.from_iterable(itertools.repeat(x,repeatMeasurements) for x in AForDP))
+	AForGreedy = list(range(1,20001))
+	#AForGreedy =  [200, 350, 500, 650, 800, 1000, 2000, 3000, 6000, 10000, 20000, 50000]
+	#AForGreedy = list(itertools.chain.from_iterable(itertools.repeat(x,repeatMeasurements) for x in AForGreedy))
+	#AForDP = [200, 350, 500, 650, 800, 1000, 2000, 3000, 6000, 10000, 20000, 50000 ]
+	AForDP = list(range(1,20001))
+	#AForDP = list(itertools.chain.from_iterable(itertools.repeat(x,repeatMeasurements) for x in AForDP))
 
 	timeForSlow = []
 	timeForGreedy = []
@@ -92,16 +94,17 @@ def runTimeDataCollect():
 		changeslow(VFour, AForSlow[i])
 		timeForSlow.append(clock() - start)
 	print("Running Greedy Algorithm")
+	print(AForGreedy)
 	for i in range(len(AForGreedy)):
 		print(i)
 		start = clock()
-		changegreedy(VFour, AForSlow[i])
+		changegreedy(VFour, AForGreedy[i])
 		timeForGreedy.append(clock() - start)
 	print("Running DP Algorithm")
 	for i in range(len(AForDP)):
 		print(i)
 		start = clock()
-		changedp(VFour, AForSlow[i])
+		changedp(VFour, AForDP[i])
 		timeForDP.append(clock() - start)
 	#Write time data to file
 	of = open('runTime.csv', "w")
@@ -151,17 +154,17 @@ def _minCoinDataHelperWithSlow(V, start, stop, step, fileName):
 		numCoinsDP, coinsDP = changedp(V, i * step + start)
 		problem.append([])
 		problem[j].append(i * step + start)
-		problem[j].append(numCoinsSlow)
 
 		problem[j].append(numCoinsGreedy)
 		problem[j].append(numCoinsDP)
+		problem[j].append(numCoinsSlow)
 		j += 1
 	#Write time data to file
 	of = open(fileName, "w")
 	# set delimiter as Excel delimiter
 	writer = csv.writer(of)
 	# place arrays in CSV file
-	writer.writerow(["A", "Slow ","Greedy","DP"])
+	writer.writerow(["A", "Greedy", "DP", "Slow"])
 	writer.writerows(problem)
 	of.close()
 
@@ -184,7 +187,7 @@ def runMinCoinDataCollect():
 	#Problem 5b
 	print("Problem 5b")
 	_minCoinDataHelper(VFive2, 2010, 2200, 5, "problem5b.csv")
-	_minCoinDataHelperWithSlow(VFive2, 1, 150, 1, "problem5bsmall.csv")
+	_minCoinDataHelperWithSlow(VFive2, 1, 300, 1, "problem5bsmall.csv")
 
 	#Problem 6
 	print("Problem 6")
