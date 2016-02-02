@@ -71,31 +71,31 @@ def runProblemsFromFile(inputFile):
 
 
 def runDenominationsTimeCollect():
-	AtoTest = list(range(10))
 	V = [1, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103]
 	dataOut = []
 	k = 0
 	for j in list(range(3, len(V)+1)):
 		print("Size of v: " + str(j))
 		Vcurrent = V[:j]
+		A = 100
 		dataOut.append([])
 		dataOut[k].append(len(Vcurrent))
-		dataOut[k].append(110)
+		dataOut[k].append(A)
 		sumGreedy = 0
 		sumDP = 0
 		sumSlow = 0
-		for i in range(len(AtoTest)):
+		for i in range(10):
 			print(i)
 			start = clock()
-			changegreedy(Vcurrent, 110)
-			sumGreedy = clock() - start
+			changegreedy(Vcurrent, A)
+			sumGreedy += clock() - start
 			start = clock()
-			changedp(Vcurrent, 110)
-			sumDP = clock() - start
-			if(AtoTest[i] <= 110):
+			changedp(Vcurrent, A)
+			sumDP += clock() - start
+			if(A <= 110 and len(Vcurrent) < 16):
 				start = clock()
-				changeslow(Vcurrent, 110)
-				sumSlow = clock() - start
+				changeslow(Vcurrent, A)
+				sumSlow += clock() - start
 		sumGreedy = sumGreedy / 10
 		sumDP = sumDP / 10
 		sumSlow = sumSlow / 10
