@@ -27,6 +27,10 @@ python coin.py --runTimeData
 	Produces file: runTime.csv
 	Note: Takes a while to run and generate data
 
+To utilize denominationsTime to generate data for problem 8:
+python coin.py --denominationsTime
+	Note: Takes a while to run and generate data
+
 General run notes - engineering server FLIP:
 python coin.py
 	Runs main program

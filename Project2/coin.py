@@ -70,58 +70,122 @@ def runProblemsFromFile(inputFile):
 	output.close()
 
 
+def runDenominationsTimeCollect():
+	V = [1, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103]
+	dataOut = []
+	k = 0
+	for j in list(range(3, len(V)+1)):
+		print("Size of v: " + str(j))
+		Vcurrent = V[:j]
+		A = 100
+		dataOut.append([])
+		dataOut[k].append(len(Vcurrent))
+		dataOut[k].append(A)
+		sumGreedy = 0
+		sumDP = 0
+		sumSlow = 0
+		for i in range(10):
+			print(i)
+			start = clock()
+			changegreedy(Vcurrent, A)
+			sumGreedy += clock() - start
+			start = clock()
+			changedp(Vcurrent, A)
+			sumDP += clock() - start
+			if(A <= 110 and len(Vcurrent) < 16):
+				start = clock()
+				changeslow(Vcurrent, A)
+				sumSlow += clock() - start
+		sumGreedy = sumGreedy / 10
+		sumDP = sumDP / 10
+		sumSlow = sumSlow / 10
+		dataOut[k].append(sumGreedy)
+		dataOut[k].append(sumDP)
+		dataOut[k].append(sumSlow)
+		k += 1
+	of = open('VtoTime.csv', "w")
+	# set delimiter as Excel delimiter
+	writer = csv.writer(of)
+	# place arrays in CSV file
+	writer.writerow(["V", "A", "Greedy", "DP", "Slow"])
+	writer.writerows(dataOut)
+	of.close()
+	print ("File Output to CSV")
+
 def runTimeDataCollect():
-	repeatMeasurements = 10
-	AForSlow = [10, 17, 25, 37, 50, 67, 75, 89, 100, 113, 125, 150]
-	AForSlow = list(itertools.chain.from_iterable(itertools.repeat(x,repeatMeasurements) for x in AForSlow))
-	AForGreedy = list(range(1,20001))
+	#repeatMeasurements = 10
+	#AForSlow = [10, 17, 25, 37, 50, 67, 75, 89, 100, 113, 125, 150]
+	#AForSlow = list(itertools.chain.from_iterable(itertools.repeat(x,repeatMeasurements) for x in AForSlow))
+	#AForGreedy = list(range(1,20001))
 	#AForGreedy =  [200, 350, 500, 650, 800, 1000, 2000, 3000, 6000, 10000, 20000, 50000]
 	#AForGreedy = list(itertools.chain.from_iterable(itertools.repeat(x,repeatMeasurements) for x in AForGreedy))
 	#AForDP = [200, 350, 500, 650, 800, 1000, 2000, 3000, 6000, 10000, 20000, 50000 ]
-	AForDP = list(range(1,20001))
+	#AForDP = list(range(1,20001))
 	#AForDP = list(itertools.chain.from_iterable(itertools.repeat(x,repeatMeasurements) for x in AForDP))
+	AForAll = list(range(1,2000))
 
 	timeForSlow = []
 	timeForGreedy = []
 	timeForDP = []
+	dataOut = []
 
 	print("Collecting data for problem #7.")
 	VFour = [1, 5, 7, 13, 17, 23, 31, 41, 47, 59]
-	print("Running Brute Force Algorithm")
-	for i in range(len(AForSlow)):
+
+	for i in list(range(len(AForAll))):
 		print(i)
+		dataOut.append([])
+		dataOut[i].append(AForAll[i])
 		start = clock()
-		changeslow(VFour, AForSlow[i])
-		timeForSlow.append(clock() - start)
-	print("Running Greedy Algorithm")
-	print(AForGreedy)
-	for i in range(len(AForGreedy)):
-		print(i)
+		changegreedy(VFour, AForAll[i])
+		dataOut[i].append(clock() - start)
 		start = clock()
-		changegreedy(VFour, AForGreedy[i])
-		timeForGreedy.append(clock() - start)
-	print("Running DP Algorithm")
-	for i in range(len(AForDP)):
-		print(i)
-		start = clock()
-		changedp(VFour, AForDP[i])
-		timeForDP.append(clock() - start)
+		changedp(VFour, AForAll[i])
+		dataOut[i].append(clock() - start)
+
+		if(AForAll[i] <= 150 ):
+			start = clock()
+			changeslow(VFour, AForAll[i])
+			dataOut[i].append(clock() - start)
+
+
+	#print("Running Brute Force Algorithm")
+	#for i in range(len(AForSlow)):
+	#	print(i)
+	#	start = clock()
+	#	changeslow(VFour, AForSlow[i])
+	#	timeForSlow.append(clock() - start)
+	#print("Running Greedy Algorithm")
+	#print(AForGreedy)
+	#for i in range(len(AForGreedy)):
+	#	print(i)
+	#	start = clock()
+	#	changegreedy(VFour, AForGreedy[i])
+	#	timeForGreedy.append(clock() - start)
+	#print("Running DP Algorithm")
+	#for i in range(len(AForDP)):
+	#	print(i)
+	#	start = clock()
+	#	changedp(VFour, AForDP[i])
+	#	timeForDP.append(clock() - start)
 	#Write time data to file
 	of = open('runTime.csv', "w")
 	# set delimiter as Excel delimiter
 	writer = csv.writer(of)
 	# place arrays in CSV file
-	writer.writerow("Slow")
-	writer.writerow(AForSlow)
-	writer.writerow(timeForSlow)
-	writer.writerow("Greedy")
-	writer.writerow(AForGreedy)
-	writer.writerow(timeForGreedy)
-	writer.writerow("DP")
-	writer.writerow(AForDP)
-	writer.writerow(timeForDP)
-	writer.writerow("Coins used")
-	writer.writerow(VFour)
+	#writer.writerow("Slow")
+	#writer.writerow(AForSlow)
+	#writer.writerow(timeForSlow)
+	#writer.writerow("Greedy")
+	#writer.writerow(AForGreedy)
+	#writer.writerow(timeForGreedy)
+	#writer.writerow("DP")
+	#writer.writerow(AForDP)
+	#writer.writerow(timeForDP)
+	#writer.writerow("Coins used")
+	#writer.writerow(VFour)
+	writer.writerow(["A", "Greedy", "DP", "Slow"])
+	writer.writerows(dataOut)
 	of.close()
 	print ("File Output to CSV")
 
@@ -201,7 +265,7 @@ def main(argv):
 	#print (changeslow(coins, n))
 	try:
 		# parse command line inputs
-		opts, args = getopt.getopt(argv, "i:", ["ifile=", "minCoin", "runTimeData"] )
+		opts, args = getopt.getopt(argv, "i:", ["ifile=", "minCoin", "runTimeData", "denominationsTime"] )
 	except getopt.GetoptError:
 		print("coin.py -i <inputFile>\n")
 		sys.exit(2)
@@ -217,6 +281,8 @@ def main(argv):
 			runTimeDataCollect()
 		elif opt in ("--minCoin"):
 			runMinCoinDataCollect()
+		elif opt in ("--denominationsTime"):
+			runDenominationsTimeCollect()
 		else:
 			print("coin.py -i <inputFile>\n")
 			sys.exit()
