@@ -1,10 +1,10 @@
 #include "cristof.h"
 
-cristof::cristof(int n)
+Cristof::Cristof(int n)
 {
     //create graph size of number of nodes
     graph = new int*[n];
-    for (int i = 0; i < n; i++) {
+    for (auto i = 0; i < n; i++) {
         //create multidimensional graph
         graph[i] = new int[n];
         //initialize graph
@@ -16,36 +16,36 @@ cristof::cristof(int n)
     mst = new vector<int> [n];
 }
 
-cristof::~cristof()
+Cristof::~Cristof()
 {
     delete[] graph;
     delete[] mst;
 }
 
 //http://www.geeksforgeeks.org/greedy-algorithms-set-5-prims-minimum-spanning-tree-mst-2/
-void cristof::primMST(int graph[V][V]){
+void Cristof::primMST(int **graph){
 
-    int currMst[V];     //holds MST
-    int key[V];         //holds current key
-    bool setMst[V];     //set of vertices not in MST yet
+    int currMst[n];     //holds MST
+    int key[n];         //holds current key
+    bool setMst[n];     //set of vertices not in MST yet
 
     //initialize all keys to infinity and bool in set to false
-    for(int v = 0; v < V; v++){
-        key[v] = INT_MAX;
+    for(auto v = 0; v < n; v++){
+        key[v] = std::numeric_limits<int>::max();
         setMst[v] = false;
     }
 
     key[0] = 0;         //first vertex
     currMst[0] = -1;    //root of MST is first node
 
-    for (int num = 0; num < V - 1; num++){
+    for (auto num = 0; num < n - 1; num++){
         //pick lowest key vertex not yet in the MST
         int low = minKey(key, setMst);
         //add to chosen in set
         setMst[low] = true;
         //check adjacent vertices that have not been picked
         //and add to key
-        for (v = 0; v < V; v++){
+        for (auto v = 0; v < n; v++){
             if (graph[low][v] && setMst[v] == false && graph[low][v] < key[v])
                 currMst[v] = low;
                 key[v] = graph[low][v];
@@ -54,7 +54,7 @@ void cristof::primMST(int graph[V][V]){
     }
 
     //move mst to mst matrix and build adjacency list
-    for (int start = 0; start < n; start++){
+    for (auto start = 0; start < n; start++){
         int last = currMst[start];
         //if not root
         if(last != -1){
@@ -66,23 +66,48 @@ void cristof::primMST(int graph[V][V]){
 }
 
 //find vertex from those not yet in MST with min value
-int cristof::minKey(int key[], bool setMst[]){
+int Cristof::minKey(int key[], bool setMst[]){
     //initialize min as infinity
-    int min = INT_MAX, min_index;
-    for (int v = 0; v < V; v++)
-        if(setMst[v] == false && key[v] < min)
+    int min = std::numeric_limits<int>::max(), min_index;
+    for (auto v = 0; v < n; v++){
+        if(setMst[v] == false && key[v] < min){
             min = key[v];
             min_index = v;
+        }
+    }
     return min_index;
 }
 
-void cristof::findOddDegree(){
-    for (int i = 0; i < nodes; i++){
-        if(())
+//find all the nodes with odd degrees
+void Cristof::findOddDegree(){
+    for (unsigned int i = 0; i < odds.size(); i++){
+        //if vertex touches an odd number of edges add to odds
+        if((mst[i].size()%2) != 0){
+            odds.push_back(i);
+        }
     }
+}
+
+//construct minimum weight perfect matching subtree from Odds
+void Cristof::minPerfect{
+    int minimum, weight;
+    vector<int>::iterator tmp, first;
 
 }
 
-void cristof::printMST(){
 
+
+void Cristof::printMST(){
+    for (auto i = 0; i < n; i++){
+            for (auto j = 0; j < n; j++){
+                cout << mst[i][j];
+            }
+            cout << endl;
+    }
+}
+
+void Cristof::printOdds(){
+    for (auto i = 0; i < n; i++){
+            cout << odds[i] < endl;
+    }
 }
