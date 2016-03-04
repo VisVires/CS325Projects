@@ -90,9 +90,42 @@ void Cristof::findOddDegree(){
 
 //construct minimum weight perfect matching subtree from Odds
 void Cristof::minPerfect{
+
+    //minimum weight variables
     int minimum, weight;
+
+    //iterator for first node and tmp
     vector<int>::iterator tmp, first;
 
+    //create odds vector
+    findOddDegree();
+
+    //for each node in odds
+    while(!odds.empty()){
+        //set first to first remaining node
+        first = odds.begin()
+        //set curr to next item after first
+        vector<int>::iterator curr = odds.begin() + 1
+        //set end to last item in odds
+        vector<int>::iterator end = odds.end()
+        //set weight to largest int possible
+        weight = std::numeric_limits<int>::max();
+        //until we go from current first to last
+        while(curr != end){
+            //if current node is of lower weight than current minimum, update current minimum
+            if (graph[*first][*curr] < weight){
+                weight = graph[*first][*curr];
+                minimum = *curr
+                tmp = *curr
+            }
+        }
+        //complete matching tree
+        mst[*first].push_back(minimum);
+        mst[minimum].push_back(*first);
+        //destroy iterators
+        odds.erase(tmp);
+        odds.erase(first);
+    }
 }
 
 
