@@ -19,17 +19,17 @@ class Cristof
     private:
         int n;
         int best;
-
-    public:
-        struct tour{
+         struct Tour{
             int length;
             int **tour;
         };
+    public:
+
         int **graph;
         vector<int>odds;
         vector<int> *mst;
         int **tsp;
-        Cristof(int n);
+        Cristof(Tour);
         ~Cristof();
         void primMST(int **graph);
         int minKey(int key[], bool setMst[]);
@@ -37,6 +37,7 @@ class Cristof
         void minPerfect();
         void setBest(int best);
         void eulerPath(vector<int> &);
+        void hamiltonPath(vector<int> &, int &);
         void printMST();
         void printOdds();
 

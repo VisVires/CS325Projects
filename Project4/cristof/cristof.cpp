@@ -1,10 +1,8 @@
 #include "cristof.h"
 
-Cristof::Cristof(int n)
+Cristof::Cristof(Tour tour)
 {
     //create graph size of number of nodes
-    graph = tour;
-
     graph = new int*[n];
     for (auto i = 0; i < n; i++) {
         //create multidimensional graph
@@ -193,13 +191,13 @@ void Cristof::hamiltonPath(vector<int> &ePath, int &dist){
         seen[i] = false;
     }
 
-    vector<int>::iterator start,curr = path.begin();
-    vector<int>::iterator next = path.begin() + 1;
+    vector<int>::iterator start,curr = ePath.begin();
+    vector<int>::iterator next = ePath.begin() + 1;
     //set first node as visited
-    seen[start] = true;
+    seen[0] = true;
 
     //until we reach the end of the list
-    while(next != path.end()){
+    while(next != ePath.end()){
         //if node not yet reached
         if(!seen[*next]){
             //add edge to total distance
@@ -213,7 +211,7 @@ void Cristof::hamiltonPath(vector<int> &ePath, int &dist){
         }
         //else remove duplicate from path
         else {
-            next = path.erase(next);
+            next = ePath.erase(next);
         }
     }
     //add total distance back to root
