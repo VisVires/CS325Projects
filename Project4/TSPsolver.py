@@ -9,6 +9,7 @@ import sys
 import csv
 import math
 import getopt
+import random
 from time import clock
 
 def readFile(fileName):
@@ -49,6 +50,42 @@ def outputTourToFile(fileName, tour, tourLen):
     for i in tour:
         fOut.write(str(i) + "\n")
     fOut.close()
+
+def greedy(adjMatrix):
+    unVisited = list(range(len(adjMatrix)))
+    tour = []
+    cityToVisit = unVisited[random.randint(0, len(unVisited) - 1)]
+    start = cityToVisit
+    tour.append(cityToVisit)
+    tour.append(cityToVisit)
+    unVisited.remove(cityToVisit)
+    for i in range(len(unVisited)):
+        cityToVisit = unVisited[random.randint(0, len(unVisited) - 1)]
+        minIndex = 0
+        minLenght = 10000000
+        for j in range(len(tour)-1):
+            dist = adjMatrix[cityToVisit][tour[j]] + adjMatrix[cityToVisit][tour[j+1]]
+            if dist < minLenght:
+                minLenght = dist
+                minIndex = j+1
+        unVisited.remove(cityToVisit)
+        tour.insert(minIndex, cityToVisit)
+    tour.remove(start)
+    return tour
+
+def greedyOPT(tour, adjMatrix, itterations):
+    for i in range(itterations):
+        city = tour[random.randint(0, len(tour)-1)]
+        tour.remove(city)
+        minIndex = 0
+        minLenght = 10000000
+        for j in range(len(tour)-1):
+            dist = adjMatrix[city][tour[j]] + adjMatrix[city][tour[j+1]]
+            if dist < minLenght:
+                minLenght = dist
+                minIndex = j+1
+        tour.insert(minIndex, city)
+    return tour
 
 def main(argv):
     try:
