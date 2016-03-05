@@ -5,6 +5,7 @@ Files:
 TSPsolver.py - main implementation of TSP code
 cristof.h - christofides algorithm header
 cristof.cpp - christofides algorithm implementation
+test.cpp - christofides algorithm testing
 
 ******************************************
             INSTRUCTIONS
@@ -12,3 +13,7 @@ cristof.cpp - christofides algorithm implementation
 To run on FLIP:
 
 *
+Run test code:
+	g++ test.cpp 
+
+

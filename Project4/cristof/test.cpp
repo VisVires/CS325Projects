@@ -16,7 +16,7 @@ int main(){
                       {6, 8, 0, 0, 9},
                       {0, 5, 7, 9, 0},
                      };
-    Cristof cris = new Cristof(5)
+    Cristof cris = new Cristof(5);
     // make graph
     cris.primMST(graph);
 return 0;
