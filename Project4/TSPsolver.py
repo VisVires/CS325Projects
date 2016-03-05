@@ -87,6 +87,31 @@ def greedyOPT(tour, adjMatrix, itterations):
         tour.insert(minIndex, city)
     return tour
 
+def twoOpt(tour, adjMatrix):
+    tour.append(tour[0])
+    iteration = 0
+    while True:
+        print(str(iteration) + ": " + str(calcTourLen(tour,adjMatrix)))
+        iteration += 1
+        minChange = 0
+        for i in range(len(tour) - 3):
+            for j in range(i + 2, len(tour) - 2):
+                change = adjMatrix[tour[i]][tour[j]] + adjMatrix[tour[i+1]][tour[j+1]] - adjMatrix[tour[i]][tour[i+1]] - adjMatrix[tour[j]][tour[j+1]]
+                if minChange > change:
+                    minChange = change
+                    mini = i+1
+                    minj = j
+         #swap edges
+        for k in range(int(math.floor( (minj - mini + 1) / 2 ))):
+            temp = tour[k + mini]
+            tour[k + mini] = tour[minj - k]
+            tour[minj - k]  = temp
+
+        if not(minChange < 0):
+            tour.remove(tour[0])
+            return tour
+
+
 def main(argv):
     try:
     # parse command line inputs
