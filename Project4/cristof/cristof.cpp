@@ -89,7 +89,7 @@ void Cristof::findOddDegree(){
 }
 
 //construct minimum weight perfect matching subtree from Odds
-void Cristof::minPerfect{
+void Cristof::minPerfect(){
 
     //minimum weight variables
     int minimum, weight;
@@ -103,11 +103,11 @@ void Cristof::minPerfect{
     //for each node in odds
     while(!odds.empty()){
         //set first to first remaining node
-        first = odds.begin()
+        first = odds.begin();
         //set curr to next item after first
-        vector<int>::iterator curr = odds.begin() + 1
+        vector<int>::iterator curr = odds.begin() + 1;
         //set end to last item in odds
-        vector<int>::iterator end = odds.end()
+        vector<int>::iterator end = odds.end();
         //set weight to largest int possible
         weight = std::numeric_limits<int>::max();
         //until we go from current first to last
@@ -115,8 +115,8 @@ void Cristof::minPerfect{
             //if current node is of lower weight than current minimum, update current minimum
             if (graph[*first][*curr] < weight){
                 weight = graph[*first][*curr];
-                minimum = *curr
-                tmp = *curr
+                minimum = *curr;
+                tmp = curr;
             }
         }
         //complete matching tree
@@ -128,7 +128,59 @@ void Cristof::minPerfect{
     }
 }
 
+void Cristof::setBest(int b){
+    best = b;
+}
 
+
+//http://www.graph-magics.com/articles/euler.php
+void Cristof::eulerPath(vector<int> &ePath){
+
+    //copy mst to temp vector
+    vector<int> *temp = new vector<int> [n];
+    for (auto i = 0; i < n; i++){
+        temp[i].resize(mst[i].size());
+        temp[i] = mst[i];
+    }
+
+    //start with empty stack and empty path
+    ePath.clear();
+    stack<int> stk;
+    //choose any start because there are no odd vertices
+    int curr = best;
+    //while curr vertex has no more neighbors
+    while(!stk.empty() || temp[curr].size() > 0){
+        //If curr has no out-going edges, add to path
+        if(temp[curr].size() == 0) {
+            ePath.push_back(curr);
+            //remove last vertex from stack and set as curr
+            int last = stk.top();
+            stk.pop();
+            curr = last;
+        }
+        //else add vertex to stack with a neighbor
+        else{
+            //add vertex to stack
+            stk.push(curr);
+            //take an adjacent neighbor
+            int neighbor = temp[curr].back();
+            //remove edge b/w neighbor and vertex
+            temp[curr].pop_back();
+            //go through neighbors neighbors
+            for (unsigned int i = 0; i < temp[neighbor].size(); i++){
+                //remove curr from neighbor list
+                if (temp[neighbor][i] == curr){
+                    temp[neighbor].erase(temp[neighbor].begin() + i);
+                    break;
+                }
+            }
+            //set curr as neighbor
+            curr = neighbor;
+        }
+        //add final vertex to path
+        ePath.push_back(curr);
+    }
+}
 
 void Cristof::printMST(){
     for (auto i = 0; i < n; i++){
@@ -141,6 +193,6 @@ void Cristof::printMST(){
 
 void Cristof::printOdds(){
     for (auto i = 0; i < n; i++){
-            cout << odds[i] < endl;
+            cout << odds[i] << endl;
     }
 }

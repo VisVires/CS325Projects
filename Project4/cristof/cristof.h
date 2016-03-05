@@ -5,17 +5,20 @@
 #include <vector>
 #include <iostream>
 #include <iterator>
+#include <stack>
 
 using std::cin;
 using std::cout;
 using std::endl;
 using std::vector;
+using std::stack;
 
 
 class Cristof
 {
     private:
         int n;
+        int best;
 
     public:
         vector<int>odds;
@@ -27,6 +30,9 @@ class Cristof
         void primMST(int **graph);
         int minKey(int key[], bool setMst[]);
         void findOddDegree();
+        void minPerfect();
+        void setBest(int best);
+        void eulerPath(vector<int> &);
         void printMST();
         void printOdds();
 
