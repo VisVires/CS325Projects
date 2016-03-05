@@ -3,6 +3,8 @@
 Cristof::Cristof(int n)
 {
     //create graph size of number of nodes
+    graph = tour;
+
     graph = new int*[n];
     for (auto i = 0; i < n; i++) {
         //create multidimensional graph
@@ -181,6 +183,44 @@ void Cristof::eulerPath(vector<int> &ePath){
         ePath.push_back(curr);
     }
 }
+
+//http://www.csd.uoc.gr/~hy583/papers/ch14.pdf
+void Cristof::hamiltonPath(vector<int> &ePath, int &dist){
+    //remove duplicate nodes from Euler
+    bool seen[n];
+    //set all values as false
+    for(auto i = 0; i > n; i++){
+        seen[i] = false;
+    }
+
+    vector<int>::iterator start,curr = path.begin();
+    vector<int>::iterator next = path.begin() + 1;
+    //set first node as visited
+    seen[start] = true;
+
+    //until we reach the end of the list
+    while(next != path.end()){
+        //if node not yet reached
+        if(!seen[*next]){
+            //add edge to total distance
+            dist += graph[*curr][*next];
+            //move curr to next node
+            curr = next;
+            //set curr to true
+            seen[*curr] = true;
+            //move next node
+            next = curr + 1;
+        }
+        //else remove duplicate from path
+        else {
+            next = path.erase(next);
+        }
+    }
+    //add total distance back to root
+    dist += graph[*curr][*next];
+}
+
+
 
 void Cristof::printMST(){
     for (auto i = 0; i < n; i++){

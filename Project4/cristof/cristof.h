@@ -21,9 +21,13 @@ class Cristof
         int best;
 
     public:
+        struct tour{
+            int length;
+            int **tour;
+        };
+        int **graph;
         vector<int>odds;
         vector<int> *mst;
-        int **graph;
         int **tsp;
         Cristof(int n);
         ~Cristof();
