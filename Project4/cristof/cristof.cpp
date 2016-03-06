@@ -4,6 +4,7 @@ Cristof::Cristof(int length)
 {
     //create graph size of number of nodes
     n = length;
+    cout << n << endl;
     graph = new int*[n];
     for (auto i = 0; i < n; i++) {
         //create multidimensional graph
@@ -24,7 +25,7 @@ Cristof::~Cristof()
 }
 
 //http://www.geeksforgeeks.org/greedy-algorithms-set-5-prims-minimum-spanning-tree-mst-2/
-void Cristof::primMST(int **tour){
+void Cristof::primMST(int *tour[], int n){
 
     graph = tour;
 
@@ -81,7 +82,7 @@ int Cristof::minKey(int key[], bool setMst[]){
 }
 
 //find all the nodes with odd degrees
-void Cristof::findOddDegree(){
+void Cristof::oddDegree(){
     for (unsigned int i = 0; i < odds.size(); i++){
         //if vertex touches an odd number of edges add to odds
         if((mst[i].size()%2) != 0){
@@ -93,7 +94,7 @@ void Cristof::findOddDegree(){
 //construct minimum weight perfect matching subtree from Odds
 void Cristof::minPerfect(){
     //create odds vector
-    findOddDegree();
+    oddDegree();
     //minimum weight variables
     int minimum, weight;
     //iterator for first node and tmp
