@@ -1,8 +1,9 @@
 #include "cristof.h"
 
-Cristof::Cristof(int n)
+Cristof::Cristof(int length)
 {
     //create graph size of number of nodes
+    n = length;
     graph = new int*[n];
     for (auto i = 0; i < n; i++) {
         //create multidimensional graph
@@ -23,7 +24,9 @@ Cristof::~Cristof()
 }
 
 //http://www.geeksforgeeks.org/greedy-algorithms-set-5-prims-minimum-spanning-tree-mst-2/
-void Cristof::primMST(int **graph){
+void Cristof::primMST(int **tour){
+
+    graph = tour;
 
     int currMst[n];     //holds MST
     int key[n];         //holds current key
@@ -50,7 +53,6 @@ void Cristof::primMST(int **graph){
                 currMst[v] = low;
                 key[v] = graph[low][v];
         }
-
     }
 
     //move mst to mst matrix and build adjacency list
@@ -90,16 +92,12 @@ void Cristof::findOddDegree(){
 
 //construct minimum weight perfect matching subtree from Odds
 void Cristof::minPerfect(){
-
-    //minimum weight variables
-    int minimum, weight;
-
-    //iterator for first node and tmp
-    vector<int>::iterator tmp, first;
-
     //create odds vector
     findOddDegree();
-
+    //minimum weight variables
+    int minimum, weight;
+    //iterator for first node and tmp
+    vector<int>::iterator tmp, first;
     //for each node in odds
     while(!odds.empty()){
         //set first to first remaining node
@@ -181,6 +179,44 @@ void Cristof::eulerPath(vector<int> &ePath){
         ePath.push_back(curr);
     }
 }
+
+//http://www.csd.uoc.gr/~hy583/papers/ch14.pdf
+void Cristof::hamiltonPath(vector<int> &ePath, int &dist){
+    //remove duplicate nodes from Euler
+    bool seen[n];
+    //set all values as false
+    for(auto i = 0; i > n; i++){
+        seen[i] = false;
+    }
+
+    vector<int>::iterator start,curr = ePath.begin();
+    vector<int>::iterator next = ePath.begin() + 1;
+    //set first node as visited
+    seen[0] = true;
+
+    //until we reach the end of the list
+    while(next != ePath.end()){
+        //if node not yet reached
+        if(!seen[*next]){
+            //add edge to total distance
+            dist += graph[*curr][*next];
+            //move curr to next node
+            curr = next;
+            //set curr to true
+            seen[*curr] = true;
+            //move next node
+            next = curr + 1;
+        }
+        //else remove duplicate from path
+        else {
+            next = ePath.erase(next);
+        }
+    }
+    //add total distance back to root
+    dist += graph[*curr][*next];
+}
+
+
 
 void Cristof::printMST(){
     for (auto i = 0; i < n; i++){
