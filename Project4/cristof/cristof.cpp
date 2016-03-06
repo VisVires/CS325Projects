@@ -5,7 +5,7 @@ Cristof::Cristof(int length)
     //create graph size of number of nodes
     n = length;
     graph = new int*[n];
-    for (unsigned int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) {
         //create multidimensional graph
         graph[i] = new int[n];
         //initialize graph
@@ -33,7 +33,7 @@ void Cristof::primMST(int *tour[], int n){
     bool mstSet[n];     //set of vertices not in MST yet
 
     //initialize all keys to infinity and bool in set to false
-    for(unsigned int v = 0; v < n; v++){
+    for(int v = 0; v < n; v++){
         key[v] = std::numeric_limits<int>::max();
         mstSet[v] = false;
     }
@@ -41,14 +41,14 @@ void Cristof::primMST(int *tour[], int n){
     key[0] = 0;         //first vertex
     currMst[0] = -1;    //root of MST is first node
 
-    for (unsigned int num = 0; num < n - 1; num++){
+    for (int num = 0; num < n - 1; num++){
         //pick lowest key vertex not yet in the MST
         int u = minKey(key, mstSet);
         //add to chosen in set
         mstSet[u] = true;
         //check adjacent vertices that have not been picked
         //and add to key
-        for (unsigned int v = 0; v < n; v++){
+        for (int v = 0; v < n; v++){
             if (graph[u][v] && mstSet[v] == false && graph[u][v] < key[v])
                 currMst[v] = u;
                 key[v] = graph[u][v];
@@ -56,7 +56,7 @@ void Cristof::primMST(int *tour[], int n){
     }
     printMST(currMst, n, graph);
     //move mst to mst matrix and build adjacency list
-    /*for (unsigned int first = 0; first < n; first++){
+    /*for (int first = 0; first < n; first++){
         int second = currMst[first];
         //if not root
         if(second != -1){
@@ -81,7 +81,7 @@ int Cristof::printMST(int *currMst, int n, int **graph)
 int Cristof::minKey(int key[], bool setMst[]){
     //initialize min as infinity
     int min = std::numeric_limits<int>::max(), min_index;
-    for (unsigned int v = 0; v < n; v++){
+    for (int v = 0; v < n; v++){
         if(setMst[v] == false && key[v] < min){
             min = key[v];
             min_index = v;
@@ -92,7 +92,7 @@ int Cristof::minKey(int key[], bool setMst[]){
 
 //find all the nodes with odd degrees
 void Cristof::oddDegree(){
-    for (unsigned int i = 0; i < odds.size(); i++){
+    for (int i = 0; i < odds.size(); i++){
         //if vertex touches an odd number of edges add to odds
         if((mst[i].size()%2) != 0){
             odds.push_back(i);
@@ -146,7 +146,7 @@ void Cristof::eulerPath(vector<int> &ePath){
 
     //copy mst to temp vector
     vector<int> *temp = new vector<int> [n];
-    for (unsigned int i = 0; i < n; i++){
+    for (int i = 0; i < n; i++){
         temp[i].resize(mst[i].size());
         temp[i] = mst[i];
     }
@@ -175,7 +175,7 @@ void Cristof::eulerPath(vector<int> &ePath){
             //remove edge b/w neighbor and vertex
             temp[curr].pop_back();
             //go through neighbors neighbors
-            for (unsigned int i = 0; i < temp[neighbor].size(); i++){
+            for (int i = 0; i < temp[neighbor].size(); i++){
                 //remove curr from neighbor list
                 if (temp[neighbor][i] == curr){
                     temp[neighbor].erase(temp[neighbor].begin() + i);
@@ -195,7 +195,7 @@ void Cristof::hamiltonPath(vector<int> &ePath, int &dist){
     //remove duplicate nodes from Euler
     bool seen[n];
     //set all values as false
-    for(unsigned int i = 0; i > n; i++){
+    for(int i = 0; i > n; i++){
         seen[i] = false;
     }
 
@@ -229,8 +229,8 @@ void Cristof::hamiltonPath(vector<int> &ePath, int &dist){
 
 
 /*void Cristof::printMST(){
-    for (unsigned int i = 0; i < n; i++){
-            for (unsigned int j = 0; j < n; j++){
+    for (int i = 0; i < n; i++){
+            for (int j = 0; j < n; j++){
                 cout << mst[i][j];
             }
             cout << endl;
@@ -239,7 +239,7 @@ void Cristof::hamiltonPath(vector<int> &ePath, int &dist){
 
 
 void Cristof::printOdds(){
-    for (unsigned int i = 0; i < n; i++){
+    for (int i = 0; i < n; i++){
             cout << odds[i] << endl;
     }
 }
