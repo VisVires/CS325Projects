@@ -29,6 +29,7 @@ void printMap(TSPmap);
 
 //Utility functions
 int calcTourLen(TSPtour, TSPadjMatrix);
-void outputTourToFile(std::string, TSPtour);
+void outputTourToFile(std::string, TSPtour, TSPadjMatrix);
 
 //Heruristic functions
+TSPtour greedyInsertion(TSPadjMatrix);

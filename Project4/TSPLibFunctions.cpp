@@ -2,6 +2,11 @@
 #include <math.h>
 #include <iostream>
 #include <fstream>
+#include <vector>
+#include <stdlib.h>
+#include <time.h>
+#include <limits>
+#include <algorithm>
 
 TSPadjMatrix adjMatrixGenerator(TSPmap tspMap)
 {
@@ -102,4 +107,51 @@ void outputTourToFile(std::string fileName, TSPtour tour, TSPadjMatrix adjM)
 		output << tour.tour[i] << "\n";
 	}
 	output.close();
+}
+
+TSPtour greedyInsertion(TSPadjMatrix adjM)
+{
+	std::vector<int> unVisited;
+	for (int i = 0; i < adjM.length; i++)
+	{
+		unVisited.emplace_back(i);
+	}
+	int* tour = new int[adjM.length];
+	int tourLength = 1;
+	srand(time(NULL));
+	int startCity = rand() % adjM.length;
+	tour[0] = startCity;
+	tour[1] = startCity;
+	unVisited.erase(unVisited.begin() + startCity);
+	int size = unVisited.size();
+	for (int i = 0; i < size; i++)
+	{
+		int cityToVisitIndex = rand() % unVisited.size();
+		int cityToVisit = unVisited[cityToVisitIndex];
+		int minIndex = 0;
+		int minLength = std::numeric_limits<int>::max();
+		for (int j = 0; j < tourLength; j++)
+		{
+			int dist = adjM.adjMatrix[cityToVisit][tour[j]] + adjM.adjMatrix[cityToVisit][tour[j + 1]] - adjM.adjMatrix[tour[j+1]][tour[j]];
+			if (dist < minLength)
+			{
+				minLength = dist;
+				minIndex = j + 1;
+				int cityIndex = cityToVisitIndex;
+			}
+		}
+		//shift the tour
+		for (int i = std::min(tourLength + 1, adjM.length); i > minIndex; i--)
+		{
+			tour[i] = tour[i - 1];
+		}
+		//insert into the tour
+		tour[minIndex] = unVisited[cityToVisitIndex];
+		unVisited.erase(unVisited.begin() + cityToVisitIndex);
+		tourLength++;
+	}
+	TSPtour output;
+	output.tour = tour;
+	output.length = tourLength;
+	return output;
 }
