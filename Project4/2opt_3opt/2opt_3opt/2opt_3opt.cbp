@@ -31,6 +31,9 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="opt2_opt3.cpp" />
+		<Unit filename="opt2_opt3.h" />
+		<Unit filename="opt_test.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
