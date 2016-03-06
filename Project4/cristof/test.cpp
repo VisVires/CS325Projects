@@ -21,13 +21,13 @@ int main(){
         return 1;
     }
 
-    for(auto i = 0; i < n; i++){
+    for(auto i = 0; i < n; i++){ 
         for(auto j = 0; j < n; j++){
             myfile >> graph2[i][j];
         }
     }
     myfile.close();
-    for(auto i = 0; i < n; i++){
+    for(auto i = 0; i < n; i++){ 
         for(auto j = 0; j < n; j++){
             cout << graph2[i][j];
         }

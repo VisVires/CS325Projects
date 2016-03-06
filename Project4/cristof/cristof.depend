@@ -17,3 +17,21 @@
 	<iostream>
 	<fstream>
 
+1457292533 source:c:\users\karen\documents\github\cs325projects\project4\cristof\cristof.cpp
+	"cristof.h"
+
+1457292533 c:\users\karen\documents\github\cs325projects\project4\cristof\cristof.h
+	<limits>
+	<cmath>
+	<vector>
+	<iostream>
+	<iterator>
+	<stack>
+	<stdio.h>
+
+1457292533 source:c:\users\karen\documents\github\cs325projects\project4\cristof\test.cpp
+	"cristof.h"
+	<string>
+	<iostream>
+	<fstream>
+

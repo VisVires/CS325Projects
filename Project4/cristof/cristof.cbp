@@ -31,6 +31,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="cristof.cpp" />
+		<Unit filename="cristof.depend" />
+		<Unit filename="cristof.h" />
+		<Unit filename="test.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
