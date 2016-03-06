@@ -1,8 +1,9 @@
 #include "cristof.h"
 
-Cristof::Cristof(Tour tour)
+Cristof::Cristof(int length)
 {
     //create graph size of number of nodes
+    n = length;
     graph = new int*[n];
     for (auto i = 0; i < n; i++) {
         //create multidimensional graph
@@ -23,7 +24,9 @@ Cristof::~Cristof()
 }
 
 //http://www.geeksforgeeks.org/greedy-algorithms-set-5-prims-minimum-spanning-tree-mst-2/
-void Cristof::primMST(int **graph){
+void Cristof::primMST(int **tour){
+
+    graph = tour;
 
     int currMst[n];     //holds MST
     int key[n];         //holds current key
@@ -50,7 +53,6 @@ void Cristof::primMST(int **graph){
                 currMst[v] = low;
                 key[v] = graph[low][v];
         }
-
     }
 
     //move mst to mst matrix and build adjacency list
@@ -90,16 +92,12 @@ void Cristof::findOddDegree(){
 
 //construct minimum weight perfect matching subtree from Odds
 void Cristof::minPerfect(){
-
-    //minimum weight variables
-    int minimum, weight;
-
-    //iterator for first node and tmp
-    vector<int>::iterator tmp, first;
-
     //create odds vector
     findOddDegree();
-
+    //minimum weight variables
+    int minimum, weight;
+    //iterator for first node and tmp
+    vector<int>::iterator tmp, first;
     //for each node in odds
     while(!odds.empty()){
         //set first to first remaining node

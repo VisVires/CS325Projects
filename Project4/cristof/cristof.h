@@ -29,9 +29,9 @@ class Cristof
         vector<int>odds;
         vector<int> *mst;
         int **tsp;
-        Cristof(Tour);
+        Cristof(int);
         ~Cristof();
-        void primMST(int **graph);
+        void primMST(int **tour);
         int minKey(int key[], bool setMst[]);
         void findOddDegree();
         void minPerfect();
@@ -40,7 +40,6 @@ class Cristof
         void hamiltonPath(vector<int> &, int &);
         void printMST();
         void printOdds();
-
 };
 
 #endif // CRISTOF_H
