@@ -6,6 +6,7 @@
 #include <iostream>
 #include <iterator>
 #include <stack>
+#include <stdio.h>
 
 using std::cin;
 using std::cout;
@@ -38,7 +39,7 @@ class Cristof
         void setBest(int best);
         void eulerPath(vector<int> &);
         void hamiltonPath(vector<int> &, int &);
-        void printMST();
+        int printMST(int *parent, int n, int **graph);
         void printOdds();
 };
 
