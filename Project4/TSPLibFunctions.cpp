@@ -81,7 +81,7 @@ int calcTourLen(TSPtour tspTour, TSPadjMatrix adjM)
 	int tourLen = 0;
 	int **matrix = adjM.adjMatrix;
 	//add the distance between the last and first city to complete the loop
-	tourLen += matrix[tspTour.tour[0]][tspTour.tour[tspTour.length]];
+	tourLen += matrix[tspTour.tour[0]][tspTour.tour[tspTour.length - 1]];
 	for (int i = 0; i < tspTour.length - 1; i++)
 	{
 		tourLen += matrix[tspTour.tour[i]][tspTour.tour[i + 1]];
