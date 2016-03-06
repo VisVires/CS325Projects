@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1457282262 source:c:\users\karen\documents\github\cs325projects\project4\2opt_3opt\2opt_3opt\opt2_opt3.cpp
+	"opt2_opt3.h"
+
+1457282541 c:\users\karen\documents\github\cs325projects\project4\2opt_3opt\2opt_3opt\opt2_opt3.h
+	<limits>
+	<cmath>
+	<vector>
+	<iostream>
+	<iterator>
+	<stack>
+
