@@ -8,12 +8,12 @@ using std::endl;
 
 int main(){
 
-    cout << "Opt2 Test";
-    opt2();
+    cout << "Opt2 Test" << endl;
+    //opt2();
 
     cout << endl;
-    cout << "Opt3 Test";
-    opt3();
+    cout << "Opt3 Test" <<endl;
+    //opt3();
 
 return 0;
 }
