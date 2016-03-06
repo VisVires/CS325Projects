@@ -6,6 +6,7 @@
 #include <iostream>
 #include <iterator>
 #include <stack>
+#include <stdio.h>
 
 using std::cin;
 using std::cout;
@@ -19,23 +20,27 @@ class Cristof
     private:
         int n;
         int best;
-
+        /*struct Tour{
+            int length;
+            int **tour;
+        };*/
     public:
+
+        int **graph;
         vector<int>odds;
         vector<int> *mst;
-        int **graph;
         int **tsp;
-        Cristof(int n);
+        Cristof(int);
         ~Cristof();
-        void primMST(int **graph);
+        void primMST(int *tour[], int);
         int minKey(int key[], bool setMst[]);
-        void findOddDegree();
+        void oddDegree();
         void minPerfect();
         void setBest(int best);
         void eulerPath(vector<int> &);
-        void printMST();
+        void hamiltonPath(vector<int> &, int &);
+        int printMST(int *parent, int n, int **graph);
         void printOdds();
-
 };
 
 #endif // CRISTOF_H
