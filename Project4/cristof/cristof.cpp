@@ -49,25 +49,33 @@ void Cristof::primMST(int *tour[], int n){
         //check adjacent vertices that have not been picked
         //and add to key
         for (int v = 0; v < n; v++){
-            if (graph[u][v] && mstSet[v] == false && graph[u][v] < key[v])
+            if (graph[u][v] && mstSet[v] == false && graph[u][v] < key[v]){
                 currMst[v] = u;
                 key[v] = graph[u][v];
+            }
         }
     }
-    printMST(currMst, n, graph);
+    printf("Edge   Weight\n");
+    for (int i = 1; i < n; i++){
+        printf("%d - %d    %d \n", currMst[i], i, graph[i][currMst[i]]);
+    }
     //move mst to mst matrix and build adjacency list
-    /*for (int first = 0; first < n; first++){
-        int second = currMst[first];
+    for (int v1 = 0; v1 < n; v1++){
+        int v2 = currMst[v1];
         //if not root
-        if(second != -1){
+        if(v2 != -1){
             //key each value to it's adjacent edge
-            mst[first].push_back(second);
-            cout << mst[first][second];
-            mst[second].push_back(first);
-            cout << mst[second][first];
+            mst[v1].push_back(v2);
+            mst[v2].push_back(v1);
+
+        }
+    }
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < mst->size(); j++){
+                cout << mst[i][j] << " ";
         }
         cout << endl;
-    }*/
+    }
 }
 
 int Cristof::printMST(int *currMst, int n, int **graph)
@@ -239,6 +247,7 @@ void Cristof::hamiltonPath(vector<int> &ePath, int &dist){
 
 
 void Cristof::printOdds(){
+    oddDegree();
     for (int i = 0; i < n; i++){
             cout << odds[i] << endl;
     }
