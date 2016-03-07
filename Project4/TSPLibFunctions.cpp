@@ -175,7 +175,7 @@ TSPtour opt2(TSPtour existing_tour, TSPadjMatrix adjM){
             }
         }
 
-    std::cout << "Opt2 end of function";
+    //std::cout << "Opt2 end of function";
 }
 
 TSPtour opt2Swap(TSPtour route, int i, int k) {
@@ -183,18 +183,18 @@ TSPtour opt2Swap(TSPtour route, int i, int k) {
   int tempK = k;
   //1. take route[1] to route[i-1] and add them in order to new_route
   for (int j = 1; j < route[i-1]; j++){
-    new_route[j] = route[j];
+    //new_route[j] = route[j];
   }
 
   //2. take route[i] to route[k] and add them in reverse order to new_route
   for(int j=i; j<k; j++){
-    new_route[j] = route[tempK-1];
+    //new_route[j] = route[tempK-1];
     tempK--; 
   }
 
   //3. take route[k+1] to end and add them in order to new_route
   for (int j = k+1; j < route.length; j++){
-    new_route[j] = route[j];
+    //new_route[j] = route[j];
   }
 
   return new_route;
