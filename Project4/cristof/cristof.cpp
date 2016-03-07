@@ -19,8 +19,11 @@ Cristof::Cristof(int length)
 
 Cristof::~Cristof()
 {
-    delete[] graph;
-    delete[] mst;
+    for(int i = 0; i < n; i++){
+        delete[] graph[i];
+    }
+    delete [] graph;
+    delete [] mst;
 }
 
 //http://www.geeksforgeeks.org/greedy-algorithms-set-5-prims-minimum-spanning-tree-mst-2/
@@ -55,11 +58,6 @@ void Cristof::primMST(int *tour[], int n){
             }
         }
     }
-    printf("Edge   Weight\n");
-    for (int i = 1; i < n; i++){
-        printf("%d - %d    %d \n", currMst[i], i, graph[i][currMst[i]]);
-    }
-    //move mst to mst matrix and build adjacency list
     for (int v1 = 0; v1 < n; v1++){
         int v2 = currMst[v1];
         //if not root
@@ -67,23 +65,14 @@ void Cristof::primMST(int *tour[], int n){
             //key each value to it's adjacent edge
             mst[v1].push_back(v2);
             mst[v2].push_back(v1);
-
         }
     }
-    for (int i = 0; i < n; i++){
-        for (int j = 0; j < mst[i].size(); j++){
-                cout << mst[i][j] << " ";
-        }
-        cout << endl;
-    }
+    cout << endl;
+    printMST(currMst, n, graph);
+    cout << endl;
+    //move mst to mst matrix and build adjacency list
 }
 
-int Cristof::printMST(int *currMst, int n, int **graph)
-{
-   printf("Edge   Weight\n");
-   for (int i = 1; i < n; i++)
-      printf("%d - %d    %d \n", currMst[i], i, graph[i][currMst[i]]);
-}
 
 //find vertex from those not yet in MST with min value
 int Cristof::minKey(int key[], bool setMst[]){
@@ -100,7 +89,9 @@ int Cristof::minKey(int key[], bool setMst[]){
 
 //find all the nodes with odd degrees
 void Cristof::oddDegree(){
-    for (int i = 0; i < odds.size(); i++){
+    cout << "Printing Odd Degrees" << endl;
+    for (unsigned int i = 0; i < n; i++){
+        cout << i << " " << mst[i].size() << endl;
         //if vertex touches an odd number of edges add to odds
         if((mst[i].size()%2) != 0){
             odds.push_back(i);
@@ -111,6 +102,7 @@ void Cristof::oddDegree(){
 //construct minimum weight perfect matching subtree from Odds
 void Cristof::minPerfect(){
     //create odds vector
+    odds.clear();
     oddDegree();
     //minimum weight variables
     int minimum, weight;
@@ -123,17 +115,18 @@ void Cristof::minPerfect(){
         //set curr to next item after first
         vector<int>::iterator curr = odds.begin() + 1;
         //set end to last item in odds
-        vector<int>::iterator end = odds.end();
+        vector<int>::iterator last = odds.end();
         //set weight to largest int possible
         weight = std::numeric_limits<int>::max();
         //until we go from current first to last
-        while(curr != end){
+        while(curr != last){
             //if current node is of lower weight than current minimum, update current minimum
             if (graph[*first][*curr] < weight){
                 weight = graph[*first][*curr];
                 minimum = *curr;
                 tmp = curr;
             }
+            ++curr;
         }
         //complete matching tree
         mst[*first].push_back(minimum);
@@ -142,6 +135,7 @@ void Cristof::minPerfect(){
         odds.erase(tmp);
         odds.erase(first);
     }
+    printMST2();
 }
 
 void Cristof::setBest(int b){
@@ -158,7 +152,7 @@ void Cristof::eulerPath(vector<int> &ePath){
         temp[i].resize(mst[i].size());
         temp[i] = mst[i];
     }
-
+    best = 0;
     //start with empty stack and empty path
     ePath.clear();
     stack<int> stk;
@@ -183,7 +177,7 @@ void Cristof::eulerPath(vector<int> &ePath){
             //remove edge b/w neighbor and vertex
             temp[curr].pop_back();
             //go through neighbors neighbors
-            for (int i = 0; i < temp[neighbor].size(); i++){
+            for (unsigned int i = 0; i < temp[neighbor].size(); i++){
                 //remove curr from neighbor list
                 if (temp[neighbor][i] == curr){
                     temp[neighbor].erase(temp[neighbor].begin() + i);
@@ -196,10 +190,11 @@ void Cristof::eulerPath(vector<int> &ePath){
         //add final vertex to path
         ePath.push_back(curr);
     }
+    printPath(ePath);
 }
 
 //http://www.csd.uoc.gr/~hy583/papers/ch14.pdf
-void Cristof::hamiltonPath(vector<int> &ePath, int &dist){
+void Cristof::hamiltonPath(vector<int> &ePath){
     //remove duplicate nodes from Euler
     bool seen[n];
     //set all values as false
@@ -232,23 +227,40 @@ void Cristof::hamiltonPath(vector<int> &ePath, int &dist){
     }
     //add total distance back to root
     dist += graph[*curr][*next];
+    printPath(ePath);
+}
+
+void Cristof::printPath(vector<int> &ePath){
+    for (int i = 0; i < ePath.size(); i++){
+        cout << ePath[i] << endl;
+    }
 }
 
 
+void Cristof::printMST(int *currMst, int n, int **graph)
+{
+    printf("Edge   Weight\n");
+    for (int i = 1; i < n; i++)
+        printf("%d - %d    %d \n", currMst[i], i, graph[i][currMst[i]]);
+    cout << endl;
+    printMST2();
+}
 
-/*void Cristof::printMST(){
+void Cristof::printMST2(){
     for (int i = 0; i < n; i++){
-            for (int j = 0; j < n; j++){
-                cout << mst[i][j];
-            }
-            cout << endl;
+        cout << "Vertex: " << i;
+        cout << " Adjacent Vertices: ";
+        for (unsigned int j = 0; j < mst[i].size(); ++j){
+                cout << mst[i][j] << " ";
+        }
+        cout << endl;
     }
-}*/
+}
 
 
 void Cristof::printOdds(){
-    oddDegree();
-    for (int i = 0; i < n; i++){
+    cout << endl;
+    for (unsigned int i = 0; i < odds.size(); i++){
             cout << odds[i] << endl;
     }
 }

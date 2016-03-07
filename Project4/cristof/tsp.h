@@ -8,6 +8,7 @@ class TSP{
     private:
         Cristof *cris;
         int length;
+        vector<int> path;
     public:
         TSP(int length);
         ~TSP();

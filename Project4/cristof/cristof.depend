@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1457315767 source:c:\users\william\documents\github\cs325projects\project4\cristof\cristof.cpp
+1457327802 source:c:\users\william\documents\github\cs325projects\project4\cristof\cristof.cpp
 	"cristof.h"
 
-1457291887 c:\users\william\documents\github\cs325projects\project4\cristof\cristof.h
+1457327670 c:\users\william\documents\github\cs325projects\project4\cristof\cristof.h
 	<limits>
 	<cmath>
 	<vector>
@@ -35,9 +35,9 @@
 	<iostream>
 	<fstream>
 
-1457319547 c:\users\william\documents\github\cs325projects\project4\cristof\tsp.h
+1457327386 c:\users\william\documents\github\cs325projects\project4\cristof\tsp.h
 	"cristof.h"
 
-1457319547 source:c:\users\william\documents\github\cs325projects\project4\cristof\tsp.cpp
+1457327973 source:c:\users\william\documents\github\cs325projects\project4\cristof\tsp.cpp
 	"tsp.h"
 
