@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1457297416 source:c:\users\william\documents\github\cs325projects\project4\cristof\cristof.cpp
+1457315767 source:c:\users\william\documents\github\cs325projects\project4\cristof\cristof.cpp
 	"cristof.h"
 
 1457291887 c:\users\william\documents\github\cs325projects\project4\cristof\cristof.h
@@ -11,8 +11,8 @@
 	<stack>
 	<stdio.h>
 
-1457294268 source:c:\users\william\documents\github\cs325projects\project4\cristof\test.cpp
-	"cristof.h"
+1457319465 source:c:\users\william\documents\github\cs325projects\project4\cristof\test.cpp
+	"tsp.h"
 	<string>
 	<iostream>
 	<fstream>
@@ -34,4 +34,10 @@
 	<string>
 	<iostream>
 	<fstream>
+
+1457319547 c:\users\william\documents\github\cs325projects\project4\cristof\tsp.h
+	"cristof.h"
+
+1457319547 source:c:\users\william\documents\github\cs325projects\project4\cristof\tsp.cpp
+	"tsp.h"
 

@@ -1,4 +1,4 @@
-#include "cristof.h"
+#include "tsp.h"
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -33,8 +33,8 @@ int main(){
         }
         cout << endl;
     }
-    Cristof *cris = new Cristof(n);
-    cris->primMST(graph2, n);
+    TSP *tsp = new TSP(n);
+    tsp->runTSP(graph2);
 
 return 0;
 
