@@ -31,6 +31,11 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="cristof.cpp" />
+		<Unit filename="cristof.h" />
+		<Unit filename="test.cpp" />
+		<Unit filename="tsp.cpp" />
+		<Unit filename="tsp.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
