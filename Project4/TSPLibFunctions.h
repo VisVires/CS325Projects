@@ -33,3 +33,7 @@ void outputTourToFile(std::string, TSPtour, TSPadjMatrix);
 
 //Heruristic functions
 TSPtour greedyInsertion(TSPadjMatrix);
+
+//2-Opt functions
+TSPtour opt2(TSPtour, TSPadjMatrix);
+TSPtour opt2Swap(TSPtour, int, int);
