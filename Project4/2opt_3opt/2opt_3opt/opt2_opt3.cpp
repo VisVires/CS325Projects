@@ -7,8 +7,36 @@
 #include <time.h>
 #include <limits>
 #include <algorithm>
+/*
+def twoOpt(tour, adjMatrix):
+    tour.append(tour[0])
+    iteration = 0
+    while True:
+        print(str(iteration) + ": " + str(calcTourLen(tour,adjMatrix)))
+        iteration += 1
+        minChange = 0
+        for i in range(len(tour) - 3):
+            for j in range(i + 2, len(tour) - 2):
+                change = adjMatrix[tour[i]][tour[j]] + adjMatrix[tour[i+1]][tour[j+1]] - adjMatrix[tour[i]][tour[i+1]] - adjMatrix[tour[j]][tour[j+1]]
+                if minChange > change:
+                    minChange = change
+                    mini = i+1
+                    minj = j
+         #swap edges
+        for k in range(int(math.floor( (minj - mini + 1) / 2 ))):
+            temp = tour[k + mini]
+            tour[k + mini] = tour[minj - k]
+            tour[minj - k]  = temp
 
+        if not(minChange < 0):
+            tour.remove(tour[0])
+            return tour
 
+TSPtour opt2(TSPtour existing_tour, TSPadjMatrix adjM){
+  int iteration = 0;
+
+}
+*/
 /*
    repeat until no improvement is made {
        start_again:
@@ -28,7 +56,7 @@
 
 TSPtour opt2(TSPtour existing_tour, TSPadjMatrix adjM){
     TSPtour new_tour;
-    int interation = 0;
+    int iteration = 0;
     int best_distance = 0;
     int new_distance = 0;
 
@@ -45,16 +73,30 @@ TSPtour opt2(TSPtour existing_tour, TSPadjMatrix adjM){
             }
         }
 
-    cout << "Opt2 end of function";
+    std::cout << "Opt2 end of function";
 }
 
 TSPtour opt2Swap(TSPtour route, int i, int k) {
-        TSPtour new_route;
-       //1. take route[1] to route[i-1] and add them in order to new_route
-       //2. take route[i] to route[k] and add them in reverse order to new_route
-       //3. take route[k+1] to end and add them in order to new_route
-       return new_route;
-   }
+  TSPtour new_route;
+  int tempK = k;
+  //1. take route[1] to route[i-1] and add them in order to new_route
+  for (int j = 1; j < route.length[i-1]; j++){
+    new_route[j] = route.[j];
+  }
+
+  //2. take route[i] to route[k] and add them in reverse order to new_route
+  for(int j=i; j<k; j++){
+    new_route[j] = route[tempK-1];
+    tempK--; 
+  }
+
+  //3. take route[k+1] to end and add them in order to new_route
+  for (int j = k+1; j < route.length; j++){
+    new_route[j] = route[j];
+  }
+
+  return new_route;
+}
 
 
 
