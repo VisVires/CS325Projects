@@ -152,7 +152,7 @@ void Cristof::eulerPath(vector<int> &ePath){
         temp[i].resize(mst[i].size());
         temp[i] = mst[i];
     }
-    best = 0;
+    best = 2;
     //start with empty stack and empty path
     ePath.clear();
     stack<int> stk;
