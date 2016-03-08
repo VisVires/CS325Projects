@@ -17,6 +17,12 @@ struct TSPtour{
 	int length;
 };
 
+struct closeCities{
+	int** closeByCities;
+	int numberOfCities;
+	int numCloseBy;
+};
+
 //AdjMatrix Functions
 TSPadjMatrix adjMatrixGenerator(TSPmap);
 void deleteAdjMatrix(TSPadjMatrix);
@@ -30,10 +36,11 @@ void printMap(TSPmap);
 //Utility functions
 int calcTourLen(TSPtour, TSPadjMatrix);
 void outputTourToFile(std::string, TSPtour, TSPadjMatrix);
+closeCities genCloseByCities(TSPadjMatrix);
 
 //Heruristic functions
 TSPtour greedyInsertion(TSPadjMatrix);
 
-//2-Opt functions
-TSPtour opt2(TSPtour, TSPadjMatrix);
-TSPtour opt2Swap(TSPtour, int, int);
+//Optimization Functions
+TSPtour SimulatedAnnealing(TSPtour, TSPadjMatrix);
+TSPtour twoOPT(TSPtour, TSPadjMatrix);

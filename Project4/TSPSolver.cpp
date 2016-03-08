@@ -28,6 +28,12 @@ int main(int argc, char* argv[])
 		t2 = clock();
 		std::cout << "Run time so far: " << ((double)t2 - (double)t1) / CLOCKS_PER_SEC << " seconds" << std::endl;
 		std::cout << "The tour lenght is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
+		std::cout << "Running optimization" << std::endl;
+		myTour = twoOPT(myTour, myAdjMatrix);
+		myTour = SimulatedAnnealing(myTour, myAdjMatrix);
+		t2 = clock();
+		std::cout << "Run time so far: " << ((double)t2 - (double)t1) / CLOCKS_PER_SEC << " seconds" << std::endl;
+		std::cout << "The tour lenght is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
 		outputTourToFile(fileName, myTour, myAdjMatrix);
 		t2 = clock();
 		std::cout << "Solution was output to file.\nTotal run time was: " << ((double)t2 - (double)t1) / CLOCKS_PER_SEC << " seconds" << std::endl;
