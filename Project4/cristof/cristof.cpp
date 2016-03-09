@@ -230,6 +230,10 @@ void Cristof::hamiltonPath(vector<int> &ePath){
     printPath(ePath);
 }
 
+int Cristof::getDist(){
+    return dist;
+}
+
 void Cristof::printPath(vector<int> &ePath){
     for (int i = 0; i < ePath.size(); i++){
         cout << ePath[i] << endl;

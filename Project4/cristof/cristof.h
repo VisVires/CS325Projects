@@ -39,6 +39,7 @@ class Cristof
         void printMST2();
         void printOdds();
         void printPath(vector<int> &);
+        int getDist();
 };
 
 #endif // CRISTOF_H

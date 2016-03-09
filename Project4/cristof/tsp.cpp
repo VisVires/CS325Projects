@@ -22,5 +22,6 @@ void TSP::runTSP(int **graph){
     cout << "Running Hamilton Path" << endl;
     cris->hamiltonPath(path);
     cout << endl;
+    cout << "Final Distance is: " << cris->getDist() << endl;
 
 }
