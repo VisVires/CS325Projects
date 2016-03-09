@@ -15,6 +15,7 @@ Cristof::Cristof(int length)
 
 	//adjacency list for mst T
     mst = new vector<int> [n];
+	dist = 0;
 }
 
 Cristof::~Cristof()

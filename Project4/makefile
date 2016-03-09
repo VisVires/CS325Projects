@@ -5,7 +5,10 @@ CXXFLAGS = -std=c++0x
 TSPSolver = TSPSolver.cpp
 TSPSolver += TSPLibFunctions.cpp
 TSPSolver += TSPLibFunctions.h
-
+TSPSolver += cristof/tsp.h
+TSPSolver += cristof/tsp.cpp
+TSPSolver += cristof/cristof.h
+TSPSolver += cristof/cristof.cpp
 
 additionalFiles = makefile 
 

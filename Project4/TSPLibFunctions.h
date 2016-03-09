@@ -44,3 +44,4 @@ TSPtour greedyInsertion(TSPadjMatrix);
 //Optimization Functions
 TSPtour SimulatedAnnealing(TSPtour, TSPadjMatrix);
 TSPtour twoOPT(TSPtour, TSPadjMatrix);
+TSPtour SimulatedAnnealingVTwo(TSPtour, TSPadjMatrix);

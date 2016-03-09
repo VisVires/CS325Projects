@@ -20,7 +20,7 @@ class Cristof
     private:
         int n;
         int best;
-        int dist = 0;
+        int dist;
     public:
         int **graph;
         vector<int>odds;
