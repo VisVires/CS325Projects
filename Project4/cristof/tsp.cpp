@@ -9,7 +9,7 @@ TSP::~TSP(){
     delete cris;
 }
 
-void TSP::runTSP(int **graph){
+vector<int>& TSP::runTSP(int **graph){
     cout << "Finding MST Tree" << endl;
     cris->primMST(graph, length);
     cout << endl;
@@ -20,8 +20,11 @@ void TSP::runTSP(int **graph){
     cris->eulerPath(path);
     cout << endl;
     cout << "Running Hamilton Path" << endl;
-    cris->hamiltonPath(path);
+    path = cris->hamiltonPath(path);
     cout << endl;
     cout << "Final Distance is: " << cris->getDist() << endl;
+    //for (vector<int>::const_iterator i = path.begin(); i != path.end(); ++i)
+        //cout << *i << ' ';
+    return path;
 
 }

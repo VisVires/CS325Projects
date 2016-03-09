@@ -34,7 +34,7 @@ class Cristof
         void minPerfect();
         void setBest(int best);
         void eulerPath(vector<int> &);
-        void hamiltonPath(vector<int> &);
+        vector<int>& hamiltonPath(vector<int> &);
         void printMST(int *parent, int n, int **graph);
         void printMST2();
         void printOdds();

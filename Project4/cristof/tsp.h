@@ -12,7 +12,7 @@ class TSP{
     public:
         TSP(int length);
         ~TSP();
-        void runTSP(int **graph);
+        vector<int>& runTSP(int **graph);
 };
 
 

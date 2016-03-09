@@ -194,7 +194,7 @@ void Cristof::eulerPath(vector<int> &ePath){
 }
 
 //http://www.csd.uoc.gr/~hy583/papers/ch14.pdf
-void Cristof::hamiltonPath(vector<int> &ePath){
+vector<int>& Cristof::hamiltonPath(vector<int> &ePath){
     //remove duplicate nodes from Euler
     bool seen[n];
     //set all values as false
@@ -228,6 +228,7 @@ void Cristof::hamiltonPath(vector<int> &ePath){
     //add total distance back to root
     dist += graph[*curr][*next];
     printPath(ePath);
+    return ePath;
 }
 
 int Cristof::getDist(){
