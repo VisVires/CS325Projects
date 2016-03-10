@@ -155,8 +155,8 @@ TSPtour greedyInsertion(TSPadjMatrix adjM)
 	output.length = tourLength;
 	return output;
 }
-<<<<<<< HEAD
-=======
+//<<<<<<< HEAD
+//=======
 
 TSPtour SimulatedAnnealing(TSPtour tour, TSPadjMatrix adjM)
 {
@@ -357,4 +357,4 @@ TSPtour twoOPT(TSPtour tour, TSPadjMatrix adjM)
 	}
 	return tour;
 }
->>>>>>> origin/master
+//>>>>>>> origin/master

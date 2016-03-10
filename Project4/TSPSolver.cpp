@@ -35,6 +35,7 @@ int main(int argc, char* argv[])
 		std::cout << "Generating a greedy solution" << std::endl;
 		newTour.length = myAdjMatrix.length;
 		newTour.tour = new int[myAdjMatrix.length];
+		
 		TSP cristofTSP(myAdjMatrix.length);
 		vector<int>cristofTour = cristofTSP.runTSP(myAdjMatrix.adjMatrix);
 		std::cout << cristofTour.size() << " size " << cristofTour[0] << std::endl;
@@ -57,16 +58,17 @@ int main(int argc, char* argv[])
 			}
 			t2 = clock();
 		}
+		
 		std::cout << "Number of cycles: " << cycles << std::endl;
 		std::cout << "Run time so far: " << ((double)t2 - (double)t1) / CLOCKS_PER_SEC << " seconds" << std::endl;
-		//std::cout << "The tour lenght is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
+		std::cout << "The tour length is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
 		//std::cout << "Running optimization" << std::endl;
 		//myTour = twoOPT(myTour, myAdjMatrix);
-		std::cout << "The tour lenght is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
+		//std::cout << "The tour length is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
 		//myTour = SimulatedAnnealingVTwo(myTour, myAdjMatrix);
 		//t2 = clock();
 		//std::cout << "Run time so far: " << ((double)t2 - (double)t1) / CLOCKS_PER_SEC << " seconds" << std::endl;
-		std::cout << "The tour lenght is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
+		std::cout << "The tour length is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
 		outputTourToFile(fileName, myTour, myAdjMatrix);
 		t2 = clock();
 		std::cout << "Solution was output to file.\nTotal run time was: " << ((double)t2 - (double)t1) / CLOCKS_PER_SEC << " seconds" << std::endl;
