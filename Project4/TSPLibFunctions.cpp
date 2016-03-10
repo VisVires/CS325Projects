@@ -396,7 +396,7 @@ closeCities genCloseByCities(TSPadjMatrix adjM)
 	return closeBy;
 }
 
-TSPtour twoOPT(TSPtour tour, TSPadjMatrix adjM)
+TSPtour twoOPT(TSPtour tour, TSPadjMatrix adjM, clock_t t1, clock_t t2, int maxTime)
 {
 	//Create a temp to hold the tour
 	TSPtour tourTemp;
@@ -438,7 +438,7 @@ TSPtour twoOPT(TSPtour tour, TSPadjMatrix adjM)
 			tourTemp.tour[k + mini] = tourTemp.tour[minj - k];
 			tourTemp.tour[minj - k] = temp;
 		}
-	} while (minChange < 0);
+	} while (minChange < 0 && maxTime < ((double)t2 - (double)t1) / CLOCKS_PER_SEC);
 	
 	//copy improved tour back
 	for (int i = 0; i < tour.length; i++)
@@ -448,14 +448,15 @@ TSPtour twoOPT(TSPtour tour, TSPadjMatrix adjM)
 	return tour;
 }
 
-TSPtour SimulatedAnnealingVTwo(TSPtour tour, TSPadjMatrix adjM)
+TSPtour SimulatedAnnealingVTwo(TSPtour tour, TSPadjMatrix adjM, clock_t t1, clock_t t2, int maxTime)
 {
 	double maxTemp = 1;
 	double temperature = maxTemp;
 	double coolingRate = 0.999999;
 	double minTemp = 1;
 	int iteration = 0;
-	int cycles = 10000000;
+	int cycles = 1000000;
+	
 	int curDist = calcTourLen(tour, adjM);
 	int lastDist = curDist;
 	int bestDist = curDist;
@@ -468,7 +469,7 @@ TSPtour SimulatedAnnealingVTwo(TSPtour tour, TSPadjMatrix adjM)
 	}
 	closeCities closeBy = genCloseByCities(adjM);
 	int improvements = 0;
-	for (int i = 0; i < cycles; i++)
+	while (iteration < cycles && maxTime < ((double)t2 - (double)t1) / CLOCKS_PER_SEC)
 	{
 		//pick cities to swap
 		int city;
@@ -595,6 +596,6 @@ TSPtour SimulatedAnnealingVTwo(TSPtour tour, TSPadjMatrix adjM)
 		else
 			temperature = minTemp;
 	}
-	std::cout << temperature << std::endl;
+	//std::cout << temperature << std::endl;
 	return tour;
 }

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+#include <stdlib.h>
+#include <time.h>
 
 struct TSPadjMatrix{
 	int** adjMatrix;
@@ -44,5 +46,5 @@ TSPtour greedyInsertionVerTwo(TSPadjMatrix);
 
 //Optimization Functions
 TSPtour SimulatedAnnealing(TSPtour, TSPadjMatrix);
-TSPtour twoOPT(TSPtour, TSPadjMatrix);
-TSPtour SimulatedAnnealingVTwo(TSPtour, TSPadjMatrix);
+TSPtour twoOPT(TSPtour, TSPadjMatrix, clock_t, clock_t, int);
+TSPtour SimulatedAnnealingVTwo(TSPtour, TSPadjMatrix, clock_t, clock_t, int);

@@ -7,8 +7,8 @@
 
 int main(int argc, char* argv[])
 {
-	srand(time(NULL));
 	clock_t t1, t2;
+	srand(time(NULL));
 	t1 = clock();
 	if (argc < 2)
 		std::cout << "TSPSolver [file name of problem] \n Program call must be made with the location of the problem" << std::endl;
@@ -29,14 +29,25 @@ int main(int argc, char* argv[])
 		TSPtour myTour;
 		myTour.length = myAdjMatrix.length;
 		myTour.tour = new int[myTour.length];
+
+
+		//Initilize variables for generating multiple greedy solutions
+		int greedyTime = 100;
+		int timeOPT1 = greedyTime + 60;
+		int timeOPT2 = 180 - timeOPT1;
+		if (myTour.length > 1000){
+			greedyTime = 60;
+			timeOPT1 = greedyTime + 60;
+			timeOPT2 = 180 - timeOPT1;
+		}
 		TSPtour newTour;
 		int cycles = 0;
 		int best = 999999999;
 		std::cout << "Generating a greedy solution" << std::endl;
 		do{
 			cycles++;
-			newTour = greedyInsertionVerTwo(myAdjMatrix);
-			//newTour = greedyInsertion(myAdjMatrix);
+			//newTour = greedyInsertionVerTwo(myAdjMatrix);
+			newTour = greedyInsertion(myAdjMatrix);
 			int dist = calcTourLen(newTour, myAdjMatrix);
 			if (dist < best)
 			{
@@ -47,16 +58,16 @@ int main(int argc, char* argv[])
 				}
 			}
 			t2 = clock();
-		}while ((((double)t2 - (double)t1) / CLOCKS_PER_SEC) < 120);
+		} while ((((double)t2 - (double)t1) / CLOCKS_PER_SEC) < greedyTime);
 		std::cout << "Number of cycles: " << cycles << std::endl;
 		std::cout << "Run time so far: " << ((double)t2 - (double)t1) / CLOCKS_PER_SEC << " seconds" << std::endl;
 		std::cout << "The tour lenght is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
 		std::cout << "Running optimization" << std::endl;
-		//myTour = twoOPT(myTour, myAdjMatrix);
-		//std::cout << "The tour lenght is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
-		myTour = SimulatedAnnealingVTwo(myTour, myAdjMatrix);
-		//t2 = clock();
-		//std::cout << "Run time so far: " << ((double)t2 - (double)t1) / CLOCKS_PER_SEC << " seconds" << std::endl;
+		
+		myTour = SimulatedAnnealingVTwo(myTour, myAdjMatrix, t1, t2, timeOPT1);
+		std::cout << "The tour lenght is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
+		
+		myTour = twoOPT(myTour, myAdjMatrix, t1, t2, timeOPT2);
 		std::cout << "The tour lenght is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
 		outputTourToFile(fileName, myTour, myAdjMatrix);
 		t2 = clock();
