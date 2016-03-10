@@ -3,7 +3,7 @@
 #include <string>
 #include <time.h>
 #include <stdlib.h>
-#include "cristof/tsp.h"
+
 
 int main(int argc, char* argv[])
 {
@@ -33,20 +33,10 @@ int main(int argc, char* argv[])
 		int cycles = 0;
 		int best = 999999999;
 		std::cout << "Generating a greedy solution" << std::endl;
-		newTour.length = myAdjMatrix.length;
-		newTour.tour = new int[myAdjMatrix.length];
-		
-		TSP cristofTSP(myAdjMatrix.length);
-		vector<int>cristofTour = cristofTSP.runTSP(myAdjMatrix.adjMatrix);
-		std::cout << cristofTour.size() << " size " << cristofTour[0] << std::endl;
-		for (int i = 0; i < cristofTour.size(); i++)
-		{
-			newTour.tour[i] = cristofTour[i];
-		}
-		while ((((double)t2 - (double)t1) / CLOCKS_PER_SEC) < 0.1 ){
+		do{
 			cycles++;
+			newTour = greedyInsertionVerTwo(myAdjMatrix);
 			//newTour = greedyInsertion(myAdjMatrix);
-			
 			int dist = calcTourLen(newTour, myAdjMatrix);
 			if (dist < best)
 			{
@@ -57,18 +47,17 @@ int main(int argc, char* argv[])
 				}
 			}
 			t2 = clock();
-		}
-		
+		}while ((((double)t2 - (double)t1) / CLOCKS_PER_SEC) < 120);
 		std::cout << "Number of cycles: " << cycles << std::endl;
 		std::cout << "Run time so far: " << ((double)t2 - (double)t1) / CLOCKS_PER_SEC << " seconds" << std::endl;
-		std::cout << "The tour length is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
-		//std::cout << "Running optimization" << std::endl;
+		std::cout << "The tour lenght is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
+		std::cout << "Running optimization" << std::endl;
 		//myTour = twoOPT(myTour, myAdjMatrix);
-		//std::cout << "The tour length is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
-		//myTour = SimulatedAnnealingVTwo(myTour, myAdjMatrix);
+		//std::cout << "The tour lenght is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
+		myTour = SimulatedAnnealingVTwo(myTour, myAdjMatrix);
 		//t2 = clock();
 		//std::cout << "Run time so far: " << ((double)t2 - (double)t1) / CLOCKS_PER_SEC << " seconds" << std::endl;
-		std::cout << "The tour length is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
+		std::cout << "The tour lenght is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
 		outputTourToFile(fileName, myTour, myAdjMatrix);
 		t2 = clock();
 		std::cout << "Solution was output to file.\nTotal run time was: " << ((double)t2 - (double)t1) / CLOCKS_PER_SEC << " seconds" << std::endl;

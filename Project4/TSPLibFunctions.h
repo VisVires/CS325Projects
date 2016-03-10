@@ -40,6 +40,7 @@ closeCities genCloseByCities(TSPadjMatrix);
 
 //Heruristic functions
 TSPtour greedyInsertion(TSPadjMatrix);
+TSPtour greedyInsertionVerTwo(TSPadjMatrix);
 
 //Optimization Functions
 TSPtour SimulatedAnnealing(TSPtour, TSPadjMatrix);

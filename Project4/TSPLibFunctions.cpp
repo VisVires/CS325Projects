@@ -96,7 +96,6 @@ void printMap(TSPmap tspMap)
 	}
 }
 
-
 void outputTourToFile(std::string fileName, TSPtour tour, TSPadjMatrix adjM)
 {
 	std::ofstream output;
@@ -118,7 +117,6 @@ TSPtour greedyInsertion(TSPadjMatrix adjM)
 	}
 	int* tour = new int[adjM.length];
 	int tourLength = 1;
-	srand(time(NULL));
 	int startCity = rand() % adjM.length;
 	tour[0] = startCity;
 	tour[1] = startCity;
@@ -155,8 +153,103 @@ TSPtour greedyInsertion(TSPadjMatrix adjM)
 	output.length = tourLength;
 	return output;
 }
-//<<<<<<< HEAD
-//=======
+
+TSPtour greedyInsertionVerTwo(TSPadjMatrix adjM)
+{
+	//Initilization
+	std::vector<int> unVisited;
+	for (int i = 0; i < adjM.length; i++)
+	{
+		unVisited.emplace_back(i);
+	}
+	int* tour = new int[adjM.length];
+	int tourLength = 1;
+	int startCity = rand() % adjM.length;
+	//Make the start and end of the tour explicit
+	tour[0] = startCity;
+	tour[1] = startCity;
+	unVisited.erase(unVisited.begin() + startCity);
+	int size = unVisited.size();
+	while (unVisited.size() > 0)
+	{
+		if ((((double)rand()) / RAND_MAX) < .50 - tourLength / adjM.length * 0.5 || tourLength < 10){
+			int cityToVisitIndex = rand() % unVisited.size();
+			int cityToVisit = unVisited[cityToVisitIndex];
+			int minIndex = 0;
+			int minLength = std::numeric_limits<int>::max();
+			for (int j = 0; j < tourLength; j++)
+			{
+				int dist = adjM.adjMatrix[cityToVisit][tour[j]] + adjM.adjMatrix[cityToVisit][tour[j + 1]] - adjM.adjMatrix[tour[j + 1]][tour[j]];
+				if (dist < minLength)
+				{
+					minLength = dist;
+					minIndex = j + 1;
+					int cityIndex = cityToVisitIndex;
+				}
+			}
+			//shift the tour
+			for (int i = std::min(tourLength + 1, adjM.length); i > minIndex; i--)
+			{
+				tour[i] = tour[i - 1];
+			}
+			//insert into the tour
+			tour[minIndex] = unVisited[cityToVisitIndex];
+			unVisited.erase(unVisited.begin() + cityToVisitIndex);
+			tourLength++;
+		}
+		else
+		{
+			int distDelta;
+			int indexOfCity = (rand() % (tourLength - 1)) + 1;
+			int cityToOPT = tour[indexOfCity];
+			int indexOfBestInsertion = indexOfCity;
+			int distChange = adjM.adjMatrix[cityToOPT][tour[indexOfCity - 1]] + adjM.adjMatrix[cityToOPT][tour[indexOfCity + 1]] - adjM.adjMatrix[tour[indexOfCity - 1]][tour[indexOfCity + 1]];
+			
+			//Search location to insert before current locaton
+			for (int n = 0; n < indexOfCity - 1; n++)
+			{
+				
+				distDelta = adjM.adjMatrix[cityToOPT][tour[n]] + adjM.adjMatrix[cityToOPT][tour[n + 1]] - adjM.adjMatrix[tour[n]][tour[n + 1]];
+				if (distDelta < distChange)
+				{
+					//indexOfBestInsertion = n;
+					//distChange = distDelta;
+				}
+			}
+			//Search location to insert after current location
+			for (int m = indexOfCity + 1; m < tourLength; m++)
+			{
+				distDelta = adjM.adjMatrix[cityToOPT][tour[m]] + adjM.adjMatrix[cityToOPT][tour[m + 1]] - adjM.adjMatrix[tour[m]][tour[m + 1]];
+				if (distDelta < distChange)
+				{
+					//indexOfBestInsertion = m;
+					//distChange = distDelta;
+				}
+			}
+			//Shift cities and insert the cityToOPT 
+			if (indexOfBestInsertion < indexOfCity)
+			{
+				for (int p = indexOfCity; p > indexOfBestInsertion; p--)
+				{
+					tour[p] = tour[p - 1];
+				}
+				tour[indexOfBestInsertion] = cityToOPT;
+			}
+			else if (indexOfBestInsertion > indexOfCity)
+			{
+				for (int r = indexOfCity; r < indexOfBestInsertion; r++)
+				{
+					tour[r] = tour[r + 1];
+				}
+				tour[indexOfBestInsertion] = cityToOPT;
+			}
+		}
+	}
+	TSPtour output;
+	output.tour = tour;
+	output.length = tourLength;
+	return output;
+}
 
 TSPtour SimulatedAnnealing(TSPtour tour, TSPadjMatrix adjM)
 {
@@ -169,7 +262,6 @@ TSPtour SimulatedAnnealing(TSPtour tour, TSPadjMatrix adjM)
 	int curDist = calcTourLen(tour, adjM);
 	int lastDist = curDist;
 	int bestDist = curDist;
-	srand(time(NULL));
 	TSPtour tempTour;
 	tempTour.length = tour.length;
 	tempTour.tour = new int[tour.length];
@@ -249,12 +341,12 @@ TSPtour SimulatedAnnealing(TSPtour tour, TSPadjMatrix adjM)
 closeCities genCloseByCities(TSPadjMatrix adjM)
 {
 	int cityDepth = 0;
-	if (adjM.length < 100)
+	if (adjM.length < 20)
 		cityDepth = adjM.length;
 	else if (adjM.length < 500)
-		cityDepth = 100;
+		cityDepth = 20;
 	else
-		cityDepth = 100;
+		cityDepth = 20;
 
 	int **closeCityList = new int*[adjM.length];
 	for (int i = 0; i < adjM.length; i++)
@@ -346,8 +438,6 @@ TSPtour twoOPT(TSPtour tour, TSPadjMatrix adjM)
 			tourTemp.tour[k + mini] = tourTemp.tour[minj - k];
 			tourTemp.tour[minj - k] = temp;
 		}
-		if (!(minChange < 0))
-			break;
 	} while (minChange < 0);
 	
 	//copy improved tour back
@@ -357,4 +447,154 @@ TSPtour twoOPT(TSPtour tour, TSPadjMatrix adjM)
 	}
 	return tour;
 }
-//>>>>>>> origin/master
+
+TSPtour SimulatedAnnealingVTwo(TSPtour tour, TSPadjMatrix adjM)
+{
+	double maxTemp = 1;
+	double temperature = maxTemp;
+	double coolingRate = 0.999999;
+	double minTemp = 1;
+	int iteration = 0;
+	int cycles = 10000000;
+	int curDist = calcTourLen(tour, adjM);
+	int lastDist = curDist;
+	int bestDist = curDist;
+	TSPtour tempTour;
+	tempTour.length = tour.length;
+	tempTour.tour = new int[tour.length];
+	for (int j = 0; j < tour.length; j++)
+	{
+		tempTour.tour[j] = tour.tour[j];
+	}
+	closeCities closeBy = genCloseByCities(adjM);
+	int improvements = 0;
+	for (int i = 0; i < cycles; i++)
+	{
+		//pick cities to swap
+		int city;
+		do{
+			city = rand() % adjM.length;
+		} while (city == tempTour.tour[tour.length - 1]);
+		int near;
+		do{
+			near = closeBy.closeByCities[city][rand() % closeBy.numCloseBy];
+		} while (city == near);
+		//std::cout << "City = " << city << " Near = " << near << std::endl;
+		int cityIndex, nearIndex;
+		//Find indexes
+		//std::cout << "Loop";
+		for (int j = 0; j < tempTour.length; j++)
+		{
+			if (tempTour.tour[j] == city){
+				cityIndex = j;
+				//std::cout << "City: " << j;
+			}
+			else if (tempTour.tour[j] == near){
+				nearIndex = j;
+				//std::cout << "Near: " << j;
+			}
+		}
+		//swap
+		//********************************************************
+		if (nearIndex == 0)
+		{
+			nearIndex = tempTour.length;
+		}
+		if (cityIndex == tempTour.length - 1)
+		{
+			//cityIndex = 0;
+		}
+		if (cityIndex < nearIndex)
+		{
+			for (int i = cityIndex; i < nearIndex - 1; i++)
+			{
+				tempTour.tour[i] = tempTour.tour[i + 1];
+			}
+			tempTour.tour[nearIndex - 1] = city;
+			//if (cityIndex == 0)
+			{
+				//tempTour.tour[tempTour.length - 1] = tempTour.tour[0];
+			}
+		}
+		
+		else if (cityIndex > nearIndex)
+		{
+			for (int i = cityIndex; i > nearIndex; i--)
+			{
+				tempTour.tour[i] = tempTour.tour[i - 1];
+			}
+			tempTour.tour[nearIndex] = city;
+		}
+		
+		else
+		{
+			std::cout << "error in simulated annealing V2 cityIndex = nearIndex" << std::endl;
+		}
+
+		//********************************************************
+		curDist = calcTourLen(tempTour, adjM);
+		//Move is better accept it
+		if (curDist < lastDist)
+		{
+
+			improvements++;
+			lastDist = curDist;
+			if (curDist < bestDist)
+			{
+
+				bestDist = curDist;
+				for (int j = 0; j < tour.length; j++)
+				{
+					tour.tour[j] = tempTour.tour[j];
+				}
+			}
+		}
+		//Move is worse accept maybe
+		else if (exp(-(curDist - lastDist) / temperature) >(((double)rand()) / RAND_MAX))
+		{
+			lastDist = curDist;
+		}
+		//Move not accepted reverse it
+		else
+		{
+			//********************************************************
+			if (cityIndex < nearIndex)
+			{
+				for (int i = nearIndex - 1; i > cityIndex; i--)
+				{
+					tempTour.tour[i] = tempTour.tour[i - 1];
+				}
+				tempTour.tour[cityIndex] = city;
+				//if (cityIndex == 0)
+				{
+					//tempTour.tour[tempTour.length - 1] = city;
+				}
+			}
+			
+			else if (cityIndex > nearIndex)
+			{
+				
+				for (int i = nearIndex; i < cityIndex; i++)
+				{
+					tempTour.tour[i] = tempTour.tour[i + 1];
+				}
+				tempTour.tour[cityIndex] = city;
+			}
+			
+			else
+			{
+				std::cout << "error in simulated annealing V2 cityIndex = nearIndex" << std::endl;
+			}
+			
+			//********************************************************
+		}
+		//Cycle housekeeping
+		iteration++;
+		if (temperature > minTemp)
+			temperature *= coolingRate;
+		else
+			temperature = minTemp;
+	}
+	std::cout << temperature << std::endl;
+	return tour;
+}
