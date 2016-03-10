@@ -32,13 +32,20 @@ int main(int argc, char* argv[])
 
 
 		//Initilize variables for generating multiple greedy solutions
-		int greedyTime = 100;
+		int maxTime = 179;
+		int greedyTime = 120;
 		int timeOPT1 = greedyTime + 60;
-		int timeOPT2 = 180 - timeOPT1;
-		if (myTour.length > 1000){
+		int timeOPT2 = 179;
+		if (myTour.length > 900){
 			greedyTime = 60;
 			timeOPT1 = greedyTime + 60;
-			timeOPT2 = 180 - timeOPT1;
+			timeOPT2 = 179 - timeOPT1;
+		}
+		else if (myTour.length < 70)
+		{
+			greedyTime = 179;
+			timeOPT1 = 179;
+			timeOPT2 = 179 - timeOPT1;
 		}
 		TSPtour newTour;
 		int cycles = 0;
@@ -60,17 +67,29 @@ int main(int argc, char* argv[])
 			t2 = clock();
 		} while ((((double)t2 - (double)t1) / CLOCKS_PER_SEC) < greedyTime);
 		std::cout << "Number of cycles: " << cycles << std::endl;
+		t2 = clock();
 		std::cout << "Run time so far: " << ((double)t2 - (double)t1) / CLOCKS_PER_SEC << " seconds" << std::endl;
 		std::cout << "The tour lenght is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
-		std::cout << "Running optimization" << std::endl;
 		
+		std::cout << "Running optimization Simulated annealing" << std::endl;
 		myTour = SimulatedAnnealingVTwo(myTour, myAdjMatrix, t1, t2, timeOPT1);
 		std::cout << "The tour lenght is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
-		
+		t2 = clock();
+		std::cout << "Run time so far: " << ((double)t2 - (double)t1) / CLOCKS_PER_SEC << " seconds" << std::endl;
+
+		std::cout << "Running optimization OPT2" << std::endl;
 		myTour = twoOPT(myTour, myAdjMatrix, t1, t2, timeOPT2);
 		std::cout << "The tour lenght is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
+		std::cout << "Run time so far: " << ((double)t2 - (double)t1) / CLOCKS_PER_SEC << " seconds" << std::endl;
+		
+		t2 = clock();
+		std::cout << "Running optimization Simulated annealing" << std::endl;
+		myTour = SimulatedAnnealingVTwo(myTour, myAdjMatrix, t1, t2, maxTime);
+		std::cout << "The tour lenght is: " << calcTourLen(myTour, myAdjMatrix) << std::endl;
+		
 		outputTourToFile(fileName, myTour, myAdjMatrix);
 		t2 = clock();
+		
 		std::cout << "Solution was output to file.\nTotal run time was: " << ((double)t2 - (double)t1) / CLOCKS_PER_SEC << " seconds" << std::endl;
 	}
 	return 0;
