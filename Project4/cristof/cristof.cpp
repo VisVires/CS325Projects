@@ -101,6 +101,7 @@ void Cristof::oddDegree(){
 }
 
 //construct minimum weight perfect matching subtree from Odds
+//https://github.com/beckysag/traveling-salesman/blob/master/tsp.cpp
 void Cristof::minPerfect(){
     //create odds vector
     odds.clear();
