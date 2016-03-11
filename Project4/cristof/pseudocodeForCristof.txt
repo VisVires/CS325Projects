@@ -1,0 +1,62 @@
+Cristofides Algorithm
+
+Find Minimum Spanning Tree of G:
+	Prim's Algorithm MST(Graph, V)
+		Initialize set of keys sized V to infinity
+		Initialize set of bools visited sized V to false
+		Set first vertex key to 0
+		Set root to -1
+		For each vertex
+			find lowest key vertex remaining
+			set visted to true
+			for each adjacent edge to lowest key that hasn't been visited 
+				check each adjacent vertex 
+				add minimum to MST
+		Create adjacency list of the MST
+
+Calculate Set of vertices in MST with an Odd Degree:
+	for each vertex in MST
+		check degree
+		if adjacent vertices is odd
+			add to set of odds
+
+Use Greedy Build a minimum weight perfect matching subgraph using vertices in Odd and Unite to build Eulerian Graph
+	Get Odds
+	For each vertex in odds
+		look in graph to find minimum weight matching vertex
+		Add vertex to adjacency list representing matching subtree
+
+Form Eulerian Circuit using connected multigraph represented by perfect matching subtree
+	initialize stack
+	starting at any vertex
+	While stack is not empty and current vertex has no outgoing edges
+		if vertex has no outgoing edges
+			add to eulerian path
+			get top of stack
+			set to current vertex
+		else
+			add vertex to stack
+			choose an adjacent neighbor
+			remove edge between neighbor and current vertex
+			for each of neighbors connected vertices
+				if connected to current vertex remove from neighbors list
+			set neighbor as new current vertex
+	Add final vertex to eulerian path
+	
+Make Eulerian Circuit into Hamilton Circuit skipping repeats
+	Initialize set SEEN size V
+	Initialize distance to zero
+	For each item SEEN
+		set to false
+	Set first vertex as seen
+	For each vertex
+		if not yet seen
+			add dist to vertex
+			move to next vertex
+			set next vertex to true
+		else
+			erase duplicate from path
+	add total distance back to root
+	return path
+			
+	
