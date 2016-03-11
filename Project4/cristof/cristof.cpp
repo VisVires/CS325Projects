@@ -34,12 +34,12 @@ void Cristof::primMST(int *tour[], int n){
 
     int currMst[n];     //holds MST
     int key[n];         //holds current key
-    bool mstSet[n];     //set of vertices not in MST yet
+    bool setMst[n];     //set of vertices not in MST yet
 
     //initialize all keys to infinity and bool in set to false
     for(int v = 0; v < n; v++){
         key[v] = std::numeric_limits<int>::max();
-        mstSet[v] = false;
+        setMst[v] = false;
     }
 
     key[0] = 0;         //first vertex
@@ -47,13 +47,13 @@ void Cristof::primMST(int *tour[], int n){
 
     for (int num = 0; num < n - 1; num++){
         //pick lowest key vertex not yet in the MST
-        int u = minKey(key, mstSet);
+        int u = minKey(key, setMst);
         //add to chosen in set
-        mstSet[u] = true;
+        setMst[u] = true;
         //check adjacent vertices that have not been picked
         //and add to key
         for (int v = 0; v < n; v++){
-            if (graph[u][v] && mstSet[v] == false && graph[u][v] < key[v]){
+            if (graph[u][v] && setMst[v] == false && graph[u][v] < key[v]){
                 currMst[v] = u;
                 key[v] = graph[u][v];
             }
@@ -120,16 +120,17 @@ void Cristof::minPerfect(){
         //set weight to largest int possible
         weight = std::numeric_limits<int>::max();
         //until we go from current first to last
-        while(curr != last){
-            //if current node is of lower weight than current minimum, update current minimum
+        for(; curr != last; ++curr){
+            //match each vertex in odds with the closest vertex in graph
             if (graph[*first][*curr] < weight){
+                //set weight of vertex as weight
                 weight = graph[*first][*curr];
+                //set matching vertex as minimum
                 minimum = *curr;
                 tmp = curr;
             }
-            ++curr;
         }
-        //complete matching tree
+        //complete matching tree adjacency list
         mst[*first].push_back(minimum);
         mst[minimum].push_back(*first);
         //destroy iterators
@@ -188,9 +189,10 @@ void Cristof::eulerPath(vector<int> &ePath){
             //set curr as neighbor
             curr = neighbor;
         }
-        //add final vertex to path
-        ePath.push_back(curr);
+
     }
+    //add final vertex to path
+    ePath.push_back(curr);
     printPath(ePath);
 }
 
