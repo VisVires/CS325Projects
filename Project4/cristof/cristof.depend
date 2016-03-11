@@ -2,7 +2,7 @@
 1457500050 source:c:\users\william\documents\github\cs325projects\project4\cristof\cristof.cpp
 	"cristof.h"
 
-1457500050 c:\users\william\documents\github\cs325projects\project4\cristof\cristof.h
+1457503806 c:\users\william\documents\github\cs325projects\project4\cristof\cristof.h
 	<limits>
 	<cmath>
 	<vector>
@@ -38,6 +38,6 @@
 1457500082 c:\users\william\documents\github\cs325projects\project4\cristof\tsp.h
 	"cristof.h"
 
-1457327973 source:c:\users\william\documents\github\cs325projects\project4\cristof\tsp.cpp
+1457500102 source:c:\users\william\documents\github\cs325projects\project4\cristof\tsp.cpp
 	"tsp.h"
 
