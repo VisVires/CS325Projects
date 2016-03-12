@@ -116,7 +116,7 @@ TSPtour greedyInsertion(TSPadjMatrix adjM)
 		unVisited.emplace_back(i);
 	}
 	int* tour = new int[adjM.length];
-	int tourLength = 1;
+	int tourLength = 0;  //int tourLength = 1;
 	int startCity = rand() % adjM.length;
 	tour[0] = startCity;
 	tour[1] = startCity;
