@@ -41,11 +41,11 @@ int main(int argc, char* argv[])
 			timeOPT1 = greedyTime + 60;
 			timeOPT2 = 179 - timeOPT1;
 		}
-		else if (myTour.length < 70)
+		else if (myTour.length < 45)
 		{
 			greedyTime = 179;
 			timeOPT1 = 179;
-			timeOPT2 = 179 - timeOPT1;
+			timeOPT2 = 179;
 		}
 		TSPtour newTour;
 		int cycles = 0;

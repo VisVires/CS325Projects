@@ -128,7 +128,7 @@ TSPtour greedyInsertion(TSPadjMatrix adjM)
 		int cityToVisit = unVisited[cityToVisitIndex];
 		int minIndex = 0;
 		int minLength = std::numeric_limits<int>::max();
-		for (int j = 0; j < tourLength; j++)
+		for (int j = 0; j < tourLength + 1; j++)
 		{
 			int dist = adjM.adjMatrix[cityToVisit][tour[j]] + adjM.adjMatrix[cityToVisit][tour[j + 1]] - adjM.adjMatrix[tour[j+1]][tour[j]];
 			if (dist < minLength)
@@ -139,7 +139,7 @@ TSPtour greedyInsertion(TSPadjMatrix adjM)
 			}
 		}
 		//shift the tour
-		for (int i = std::min(tourLength + 1, adjM.length); i > minIndex; i--)
+		for (int i = std::min(tourLength + 2, adjM.length - 1); i > minIndex; i--)
 		{
 			tour[i] = tour[i - 1];
 		}
